@@ -1,10 +1,9 @@
 package main
 
 import (
-	"crud/controllers"
-	"fmt"
+	"crud/app"
 )
 
 func main() {
-	fmt.Println(controllers.Name)
+	app.Start()
 }
