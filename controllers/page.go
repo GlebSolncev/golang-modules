@@ -1,3 +1,3 @@
 package controllers
 
-var name string = "page"
+var Name = "page"

@@ -1,12 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"crud/controllers"
+	"fmt"
 )
 
-// import "github.com/GlebSolncev/golang-modules/app/controllers/page_controller"
-
 func main() {
-	fmt.Println(controllers.name)
+	fmt.Println(controllers.Name)
 }
