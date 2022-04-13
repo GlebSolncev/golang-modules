@@ -8,7 +8,11 @@ import (
 )
 
 func GetPages(c echo.Context) error {
-	return c.JSON(http.StatusOK, models.GetPages())
+	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
+		"name":  "Home",
+		"pages": models.GetPages(),
+		"page":  nil,
+	})
 }
 
 func ShowPage(c echo.Context) error {
@@ -21,13 +25,21 @@ func ShowPage(c echo.Context) error {
 		page = models.Page{}
 	}
 
-	return c.JSON(statusCode, page)
+	return c.Render(statusCode, "home.html", map[string]interface{}{
+		"name":  "Home",
+		"pages": models.GetPages(),
+		"page":  page,
+	})
 }
 
 func StorePage(c echo.Context) error {
 	models.StorePage(c)
 
-	return c.JSON(http.StatusOK, models.GetPages())
+	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
+		"name":  "Home",
+		"pages": models.GetPages(),
+		"page":  nil,
+	})
 }
 
 func UpdatePage(c echo.Context) error {
@@ -38,5 +50,9 @@ func UpdatePage(c echo.Context) error {
 		page = models.Page{}
 	}
 
-	return c.JSON(statusCode, page)
+	return c.Render(statusCode, "home.html", map[string]interface{}{
+		"name":  "Home",
+		"pages": models.GetPages(),
+		"page":  page,
+	})
 }

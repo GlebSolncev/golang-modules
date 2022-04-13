@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Hello {{.name}}</h1>
+
+{{ if .page }}
+{{ .page.Id }}) <b>{{ .page.Name }}</b>
+{{end}}
+
+<p>LIST: </p>
+<ul>
+    {{range .pages}}
+    {{if .Id}}
+    <li>{{.Id}} ) <a href="/pages/{{.Id}}">{{.Name}}</a></li>
+    {{end}}
+    {{end}}
+</ul>
+
+{{ if .page }}
+<b>Edit Page</b>
+<form action="/pages/{{.page.Id}}" method="POST">
+
+    <p>Name: <input type="text" name="name" value="{{.page.Name}}"></p>
+    <p>Slug: <input type="text" name="slug" value="{{.page.Slug}}"></p>
+    <input type="submit" value="Update">
+
+</form>
+{{end}}
+
+<b>Add Page</b>
+<form action="/pages" method="POST">
+
+    <p>Id: <input type="text" name="id"></p>
+    <p>Name: <input type="text" name="name"></p>
+    <p>Slug: <input type="text" name="slug"></p>
+    <input type="submit" value="Add">
+
+</form>
+
+</body>
+</html>
