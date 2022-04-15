@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"crud/models"
+	models "crud/models"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
@@ -10,7 +10,7 @@ import (
 func GetPages(c echo.Context) error {
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
 		"name":  "Home",
-		"pages": models.GetPages(),
+		"pages": models.GetAll(),
 		"page":  nil,
 	})
 }
@@ -27,7 +27,7 @@ func ShowPage(c echo.Context) error {
 
 	return c.Render(statusCode, "home.html", map[string]interface{}{
 		"name":  "Home",
-		"pages": models.GetPages(),
+		"pages": models.GetAll(),
 		"page":  page,
 	})
 }
@@ -37,7 +37,7 @@ func StorePage(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
 		"name":  "Home",
-		"pages": models.GetPages(),
+		"pages": models.GetAll(),
 		"page":  nil,
 	})
 }
@@ -47,12 +47,11 @@ func UpdatePage(c echo.Context) error {
 	var statusCode = http.StatusOK
 	if page.Slug == "" {
 		statusCode = http.StatusNotFound
-		page = models.Page{}
 	}
 
 	return c.Render(statusCode, "home.html", map[string]interface{}{
 		"name":  "Home",
-		"pages": models.GetPages(),
+		"pages": models.GetAll(),
 		"page":  page,
 	})
 }

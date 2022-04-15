@@ -1,23 +1,25 @@
 package models
 
 import (
+	"crud/services/database"
 	"encoding/json"
+	"fmt"
 	"github.com/labstack/echo"
-	"io/ioutil"
 	"strconv"
 )
 
-type Page struct {
-	Id   int    `json:"id"`
-	Slug string `json:"slug"`
-	Name string `json:"name"`
-}
+type (
+	Page struct {
+		Id   int    `json:"id"`
+		Slug string `json:"slug"`
+		Name string `json:"name"`
+	}
+	Pages struct {
+		Pages []*Page `json:"page"`
+	}
+)
 
-type Pages struct {
-	Pages []*Page `json:"page"`
-}
-
-var filename = "storage/page.json"
+var manage = database.NewMethod{}.Start()
 
 func check(err error) {
 	if err != nil {
@@ -25,46 +27,51 @@ func check(err error) {
 	}
 }
 
-func getCollect() []Page {
-	var pages []Page
-	var byteValue, _ = ioutil.ReadFile(filename)
+func GetAll() []Page {
+	var (
+		pages []Page
+		data  = manage.Get()
+	)
 
-	err := json.Unmarshal(byteValue, &pages)
-	check(err)
+	// fmt.Println("GET ALL >>>>")
+	if len(data) >= 1 {
+		//// fmt.Println(reflect.TypeOf(data))
+		fmt.Println(string(data), pages)
+		err := json.Unmarshal(data, &pages)
+		check(err)
+	}
 
 	return pages
 }
 
-func GetPages() []Page {
-	var pages = getCollect()
-
-	return pages
-}
-
-func UpdatePage(c echo.Context) Page {
-	var id, _ = strconv.Atoi(c.Param("id"))
-	var page *Page = new(Page)
-	err := c.Bind(page)
+func UpdatePage(c echo.Context) *Page {
+	var (
+		id, _ = strconv.Atoi(c.Param("id"))
+		pages = GetAll()
+		page  = new(Page)
+		err   = c.Bind(page)
+	)
 	check(err)
-	var pages = getCollect()
 
 	for k, item := range pages {
-		//&pages
-		if item.Id == id {
+		if id == item.Id {
 			//pages[k].Id = page.Id
 			pages[k].Slug = page.Slug
 			pages[k].Name = page.Name
 		}
 	}
 
-	result, _ := json.Marshal(pages)
-	err = ioutil.WriteFile(filename, result, 0644)
-	return FindById(id)
+	inrec, _ := json.Marshal(pages)
+	manage.Save(inrec)
+
+	return page
 }
 
 func FindById(id int) Page {
-	var resultPage Page
-	var pages = getCollect()
+	var (
+		resultPage Page
+		pages      = GetAll()
+	)
 
 	for _, page := range pages {
 		if page.Id == id {
@@ -77,18 +84,24 @@ func FindById(id int) Page {
 }
 
 func StorePage(c echo.Context) bool {
-	var pages []*Page
-	var byteValue, _ = ioutil.ReadFile(filename)
-	var page *Page = new(Page)
+	var (
+		pages []*Page
+		data  []byte = manage.Get()
+		page  *Page  = new(Page)
+		err   error
+	)
 
-	err := c.Bind(page)
+	if len(data) > 1 {
+		err = json.Unmarshal(data, &pages)
+		check(err)
+	}
+
+	err = c.Bind(page)
 	check(err)
-	err = json.Unmarshal(byteValue, &pages)
-	check(err)
+	page.Id = len(pages) + 1
 	pages = append(pages, page)
-	result, _ := json.Marshal(pages)
-	err = ioutil.WriteFile(filename, result, 0644)
+	data, err = json.Marshal(pages)
 	check(err)
 
-	return true
+	return manage.Save(data)
 }
