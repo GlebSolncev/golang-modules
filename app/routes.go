@@ -15,4 +15,5 @@ func Routes(e *echo.Echo) {
 	e.POST("/pages", controllers.StorePage)
 	e.GET("/pages/:id", controllers.ShowPage)
 	e.POST("/pages/:id", controllers.UpdatePage)
+	e.GET("/pages/:id/destroy", controllers.DeletePage)
 }

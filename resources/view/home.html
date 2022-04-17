@@ -15,7 +15,7 @@
 <ul>
     {{range .pages}}
     {{if .Id}}
-    <li>{{.Id}} ) <a href="/pages/{{.Id}}">{{.Name}}</a></li>
+    <li>{{.Id}} ) {{.Name}} - <a href="/pages/{{.Id}}">Edit</a> <a href="/pages/{{.Id}}/destroy">Remove</a></li>
     {{end}}
     {{end}}
 </ul>

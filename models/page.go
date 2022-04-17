@@ -33,10 +33,7 @@ func GetAll() []Page {
 		data  = manage.Get()
 	)
 
-	// fmt.Println("GET ALL >>>>")
 	if len(data) >= 1 {
-		//// fmt.Println(reflect.TypeOf(data))
-		fmt.Println(string(data), pages)
 		err := json.Unmarshal(data, &pages)
 		check(err)
 	}
@@ -65,6 +62,32 @@ func UpdatePage(c echo.Context) *Page {
 	manage.Save(inrec)
 
 	return page
+}
+
+func RemoveFromList(arr []Page, id int) []Page {
+	new_arr := make([]Page, len(arr)-1)
+	k := 0
+	for _, item := range arr {
+		if item.Id != id {
+			new_arr[k] = item
+			k++
+		}
+	}
+
+	return new_arr
+}
+
+func DeletePage(c echo.Context) {
+	var (
+		id, _    = strconv.Atoi(c.Param("id"))
+		pages    = GetAll()
+		newPages []Page
+	)
+
+	newPages = RemoveFromList(pages, id)
+	fmt.Println("X >>> ", newPages)
+	data, _ := json.Marshal(newPages)
+	manage.Save(data)
 }
 
 func FindById(id int) Page {
@@ -98,7 +121,11 @@ func StorePage(c echo.Context) bool {
 
 	err = c.Bind(page)
 	check(err)
-	page.Id = len(pages) + 1
+	if len(pages) > 0 {
+		page.Id = pages[len(pages)-1].Id + 1
+	} else {
+		page.Id = 1
+	}
 	pages = append(pages, page)
 	data, err = json.Marshal(pages)
 	check(err)

@@ -10,7 +10,7 @@ type (
 )
 
 var (
-	defaultMethod DBMethods = &StructMethod{}
+	defaultMethod DBMethods = &FileMethod{}
 )
 
 func (n NewMethod) Start() DBMethods {
