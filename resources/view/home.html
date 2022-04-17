@@ -7,20 +7,25 @@
 <body>
 <h1>Hello {{.name}}</h1>
 
-{{ if .page }}
-{{ .page.Id }}) <b>{{ .page.Name }}</b>
-{{end}}
-
 <p>LIST: </p>
 <ul>
     {{range .pages}}
     {{if .Id}}
-    <li>{{.Id}} ) {{.Name}} - <a href="/pages/{{.Id}}">Edit</a> <a href="/pages/{{.Id}}/destroy">Remove</a></li>
+    <li> <a href="/pages/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} <a href="/pages/{{.Id}}/destroy">[X]</a></li>
     {{end}}
     {{end}}
 </ul>
 
 {{ if .page }}
+<p>
+    <b>Info Page</b>
+    <ul>
+        <li>ID: {{.page.Id}} </li>
+        <li>SLUG: {{.page.Slug}} </li>
+        <li>NAME: {{.page.Name}} </li>
+    </ul>
+</p>
+
 <b>Edit Page</b>
 <form action="/pages/{{.page.Id}}" method="POST">
 
