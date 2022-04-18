@@ -11,10 +11,11 @@ func Routes(e *echo.Echo) {
 		return c.JSON(http.StatusOK, "OK")
 	})
 
-	e.GET("/todos", controllers.GetTodos)
-	e.POST("/todos", controllers.StoreTodo)
-	e.GET("/todos/:id", controllers.ShowTodo)
-	e.POST("/todos/:id", controllers.UpdateTodo)
-	e.GET("/todos/:id/destroy", controllers.DeleteTodo)
+	todo := e.Group("/todo")
+	todo.GET("", controllers.GetTodos).Name = "index"
+	todo.POST("/store", controllers.StoreTodo)
+	todo.GET("/:id", controllers.ShowTodo).Name = "show"
+	todo.POST("/:id", controllers.UpdateTodo)
+	todo.GET("/:id/delete", controllers.DeleteTodo)
 
 }

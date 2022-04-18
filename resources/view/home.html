@@ -7,14 +7,62 @@
 <body>
 <h1>Todo: {{.name}}</h1>
 
+<style>
+    .container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header{
+        text-align: center;
+    }
+
+    .item {
+        padding: 0px 5% 0px 5%
+    }
+</style>
+
 <p>LIST: </p>
-<ul>
-    {{range .todos}}
-        {{if .Id}}
-            <li> <a href="/todos/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todos/{{.Id}}/destroy">[X]</a></li>
-        {{end}}
-    {{end}}
-</ul>
+<div class="container">
+    <div class="item">
+        <p class="header"><b>Start</b></p>
+        <ul>
+            {{range .todos}}
+            {{if (eq .Status "Start")}}
+            <li> <a href="/todo/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todo/{{.Id}}/delete">[X]</a></li>
+            {{end}}
+            {{end}}
+        </ul>
+    </div>
+    <div class="item">
+        <p class="header"><b>In process</b></p>
+        <ul>
+            {{range .todos}}
+            {{if (eq .Status "InProcess")}}
+            <li> <a href="/todo/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todo/{{.Id}}/delete">[X]</a></li>
+            {{end}}
+            {{end}}
+        </ul>
+    </div>
+    <div class="item">
+        <p class="header"><b>Done</b></p>
+        <ul>
+            {{range .todos}}
+            {{if (eq .Status "Done")}}
+            <li> <a href="/todo/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todo/{{.Id}}/delete">[X]</a></li>
+            {{end}}
+            {{end}}
+        </ul>
+    </div>
+
+</div>
+
 
 {{ if .todo }}
 <p>
@@ -28,7 +76,7 @@
 </p>
 
 <b>Edit Page</b>
-<form action="/todos/{{.todo.Id}}" method="POST">
+<form action="/todo/{{.todo.Id}}" method="POST">
 
     <p>Name: <input type="text" name="name" value="{{.todo.Name}}"></p>
     <p>Slug: <input type="text" name="slug" value="{{.todo.Slug}}"></p>
@@ -46,7 +94,7 @@
 {{end}}
 
 <b>Add Page</b>
-<form action="/todos" method="POST">
+<form action="/todo/store" method="POST">
 
     <p>Name: <input type="text" name="name"></p>
     <p>Slug: <input type="text" name="slug"></p>

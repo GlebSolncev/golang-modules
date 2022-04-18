@@ -1,7 +1,8 @@
 package controllers
 
 import (
-	models "crud/models"
+	"crud/models"
+	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
@@ -36,29 +37,22 @@ func ShowTodo(c echo.Context) error {
 
 func StoreTodo(c echo.Context) error {
 	models.StoreTodo(c)
+	fmt.Println(1213123)
 
-	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
-		"name":  "Store",
-		"todos": models.GetAll(),
-		"todo":  nil,
-	})
+	return c.Redirect(http.StatusFound, "/todo")
 }
 
 func UpdateTodo(c echo.Context) error {
 	var (
 		todo       = models.UpdateTodo(c)
-		statusCode = http.StatusOK
+		statusCode = http.StatusFound
 	)
 
 	if todo.Slug == "" {
 		statusCode = http.StatusNotFound
 	}
 
-	return c.Render(statusCode, "home.html", map[string]interface{}{
-		"name":  "Update",
-		"todos": models.GetAll(),
-		"todo":  todo,
-	})
+	return c.Redirect(statusCode, "/todo/"+c.Param("id"))
 }
 
 func DeleteTodo(c echo.Context) error {

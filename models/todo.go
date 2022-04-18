@@ -56,6 +56,7 @@ func UpdateTodo(c echo.Context) *Todo {
 			//todos[k].Id = todo.Id
 			todos[k].Slug = todo.Slug
 			todos[k].Name = todo.Name
+			todos[k].Status = todo.Status
 		}
 	}
 
