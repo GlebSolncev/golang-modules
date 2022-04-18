@@ -17,7 +17,7 @@ func (n NewMethod) Start() DBMethods {
 	return defaultMethod
 }
 
-var filename = "storage/page.json"
+var filename = "storage/todo.json"
 
 func check(err error) {
 	if err != nil {

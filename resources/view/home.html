@@ -10,9 +10,9 @@
 <p>LIST: </p>
 <ul>
     {{range .todos}}
-    {{if .Id}}
-    <li> <a href="/todos/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} <a href="/todos/{{.Id}}/destroy">[X]</a></li>
-    {{end}}
+        {{if .Id}}
+            <li> <a href="/todos/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todos/{{.Id}}/destroy">[X]</a></li>
+        {{end}}
     {{end}}
 </ul>
 
@@ -23,6 +23,7 @@
         <li>ID: {{.todo.Id}} </li>
         <li>SLUG: {{.todo.Slug}} </li>
         <li>NAME: {{.todo.Name}} </li>
+        <li>STATUS: {{.todo.Status}} </li>
     </ul>
 </p>
 
@@ -31,6 +32,14 @@
 
     <p>Name: <input type="text" name="name" value="{{.todo.Name}}"></p>
     <p>Slug: <input type="text" name="slug" value="{{.todo.Slug}}"></p>
+    <p>Status:
+        <select name="status">
+            <option value="{{.todo.Status}}">-- Select --</option>
+            <option value="Start">Start</option>
+            <option value="InProcess">InProcess</option>
+            <option value="Done">Done</option>
+        </select>
+    </p>
     <input type="submit" value="Update">
 
 </form>
@@ -41,6 +50,14 @@
 
     <p>Name: <input type="text" name="name"></p>
     <p>Slug: <input type="text" name="slug"></p>
+    <p>Status:
+        <select name="status">
+            <option value="Start">Start</option>
+            <option value="InProcess">InProcess</option>
+            <option value="Done">Done</option>
+        </select>
+    </p>
+
     <input type="submit" value="Add">
 
 </form>

@@ -10,9 +10,10 @@ import (
 
 type (
 	Todo struct {
-		Id   int    `json:"id"`
-		Slug string `json:"slug"`
-		Name string `json:"name"`
+		Id     int    `json:"id"`
+		Slug   string `json:"slug"`
+		Name   string `json:"name"`
+		Status string `json:"status"`
 	}
 	Todos struct {
 		Todos []*Todo `json:"todo"`
