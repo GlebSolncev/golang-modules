@@ -28,14 +28,13 @@
     }
 </style>
 
-<p>LIST: </p>
 <div class="container">
     <div class="item">
         <p class="header"><b>Start</b></p>
         <ul>
             {{range .todos}}
             {{if (eq .Status "Start")}}
-            <li> <a href="/todo/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todo/{{.Id}}/delete">[X]</a></li>
+            <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - {{.Status}} <a href="/todo/{{.Id}}">[E]</a> <a href="/todo/{{.Id}}/delete">[X]</a></li>
             {{end}}
             {{end}}
         </ul>
@@ -64,51 +63,59 @@
 </div>
 
 
-{{ if .todo }}
-<p>
-    <b>Info Page</b>
-    <ul>
-        <li>ID: {{.todo.Id}} </li>
-        <li>SLUG: {{.todo.Slug}} </li>
-        <li>NAME: {{.todo.Name}} </li>
-        <li>STATUS: {{.todo.Status}} </li>
-    </ul>
-</p>
-
-<b>Edit Page</b>
-<form action="/todo/{{.todo.Id}}" method="POST">
-
-    <p>Name: <input type="text" name="name" value="{{.todo.Name}}"></p>
-    <p>Slug: <input type="text" name="slug" value="{{.todo.Slug}}"></p>
-    <p>Status:
-        <select name="status">
-            <option value="{{.todo.Status}}">-- Select --</option>
-            <option value="Start">Start</option>
-            <option value="InProcess">InProcess</option>
-            <option value="Done">Done</option>
-        </select>
+<div class="container">
+    <div class="item">
+    {{ if .todo }}
+    <p>
+        <b>Info TODO</b>
+        <ul>
+            <li>ID: {{.todo.Id}} </li>
+            <li>SLUG: {{.todo.Slug}} </li>
+            <li>NAME: {{.todo.Name}} </li>
+            <li>STATUS: {{.todo.Status}} </li>
+        </ul>
     </p>
-    <input type="submit" value="Update">
+    </div>
 
-</form>
-{{end}}
+    <div class="item">
+    <b>Edit TODO</b>
+    <form action="/todo/{{.todo.Id}}" method="POST">
 
-<b>Add Page</b>
-<form action="/todo/store" method="POST">
+        <p>Name: <input type="text" name="name" value="{{.todo.Name}}"></p>
+        <p>Slug: <input type="text" name="slug" value="{{.todo.Slug}}"></p>
+        <p>Status:
+            <select name="status">
+                <option value="{{.todo.Status}}">-- Select --</option>
+                <option value="Start">Start</option>
+                <option value="InProcess">InProcess</option>
+                <option value="Done">Done</option>
+            </select>
+        </p>
+        <input type="submit" value="Update">
 
-    <p>Name: <input type="text" name="name"></p>
-    <p>Slug: <input type="text" name="slug"></p>
-    <p>Status:
-        <select name="status">
-            <option value="Start">Start</option>
-            <option value="InProcess">InProcess</option>
-            <option value="Done">Done</option>
-        </select>
-    </p>
+    </form>
+    {{end}}
+    </div>
 
-    <input type="submit" value="Add">
+    <div class="item">
+    <b>Add TODO</b>
+    <form action="/todo/store" method="POST">
 
-</form>
+        <p>Name: <input type="text" name="name"></p>
+        <p>Slug: <input type="text" name="slug"></p>
+        <p>Status:
+            <select name="status">
+                <option value="Start">Start</option>
+                <option value="InProcess">InProcess</option>
+                <option value="Done">Done</option>
+            </select>
+        </p>
+
+        <input type="submit" value="Add">
+
+    </form>
+    </div>
+</div>
 
 </body>
 </html>
