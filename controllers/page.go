@@ -7,69 +7,69 @@ import (
 	"strconv"
 )
 
-func GetPages(c echo.Context) error {
+func GetTodos(c echo.Context) error {
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
-		"name":  "Home",
-		"pages": models.GetAll(),
-		"page":  nil,
+		"name":  "Index",
+		"todos": models.GetAll(),
+		"todo":  nil,
 	})
 }
 
-func ShowPage(c echo.Context) error {
+func ShowTodo(c echo.Context) error {
 	var (
 		id, _      = strconv.Atoi(c.Param("id"))
 		statusCode = http.StatusOK
-		page       = models.FindById(id)
+		todo       = models.FindById(id)
 	)
 
-	if page.Slug == "" {
+	if todo.Slug == "" {
 		statusCode = http.StatusNotFound
-		page = models.Page{}
+		todo = models.Todo{}
 	}
 
 	return c.Render(statusCode, "home.html", map[string]interface{}{
-		"name":  "Home",
-		"pages": models.GetAll(),
-		"page":  page,
+		"name":  "Show",
+		"todos": models.GetAll(),
+		"todo":  todo,
 	})
 }
 
-func StorePage(c echo.Context) error {
-	models.StorePage(c)
+func StoreTodo(c echo.Context) error {
+	models.StoreTodo(c)
 
 	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
-		"name":  "Home",
-		"pages": models.GetAll(),
-		"page":  nil,
+		"name":  "Store",
+		"todos": models.GetAll(),
+		"todo":  nil,
 	})
 }
 
-func UpdatePage(c echo.Context) error {
+func UpdateTodo(c echo.Context) error {
 	var (
-		page       = models.UpdatePage(c)
+		todo       = models.UpdateTodo(c)
 		statusCode = http.StatusOK
 	)
 
-	if page.Slug == "" {
+	if todo.Slug == "" {
 		statusCode = http.StatusNotFound
 	}
 
 	return c.Render(statusCode, "home.html", map[string]interface{}{
-		"name":  "Home",
-		"pages": models.GetAll(),
-		"page":  page,
+		"name":  "Update",
+		"todos": models.GetAll(),
+		"todo":  todo,
 	})
 }
 
-func DeletePage(c echo.Context) error {
+func DeleteTodo(c echo.Context) error {
 	var (
 		statusCode = http.StatusOK
 	)
-	models.DeletePage(c)
+	models.DeleteTodo(c)
 
 	return c.Render(statusCode, "home.html", map[string]interface{}{
 		"name":  "Home",
-		"pages": models.GetAll(),
-		"page":  nil,
+		"todos": models.GetAll(),
+		"todo":  nil,
 	})
 }

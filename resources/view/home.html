@@ -5,39 +5,39 @@
     <title>Home</title>
 </head>
 <body>
-<h1>Hello {{.name}}</h1>
+<h1>Todo: {{.name}}</h1>
 
 <p>LIST: </p>
 <ul>
-    {{range .pages}}
+    {{range .todos}}
     {{if .Id}}
-    <li> <a href="/pages/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} <a href="/pages/{{.Id}}/destroy">[X]</a></li>
+    <li> <a href="/todos/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} <a href="/todos/{{.Id}}/destroy">[X]</a></li>
     {{end}}
     {{end}}
 </ul>
 
-{{ if .page }}
+{{ if .todo }}
 <p>
     <b>Info Page</b>
     <ul>
-        <li>ID: {{.page.Id}} </li>
-        <li>SLUG: {{.page.Slug}} </li>
-        <li>NAME: {{.page.Name}} </li>
+        <li>ID: {{.todo.Id}} </li>
+        <li>SLUG: {{.todo.Slug}} </li>
+        <li>NAME: {{.todo.Name}} </li>
     </ul>
 </p>
 
 <b>Edit Page</b>
-<form action="/pages/{{.page.Id}}" method="POST">
+<form action="/todos/{{.todo.Id}}" method="POST">
 
-    <p>Name: <input type="text" name="name" value="{{.page.Name}}"></p>
-    <p>Slug: <input type="text" name="slug" value="{{.page.Slug}}"></p>
+    <p>Name: <input type="text" name="name" value="{{.todo.Name}}"></p>
+    <p>Slug: <input type="text" name="slug" value="{{.todo.Slug}}"></p>
     <input type="submit" value="Update">
 
 </form>
 {{end}}
 
 <b>Add Page</b>
-<form action="/pages" method="POST">
+<form action="/todos" method="POST">
 
     <p>Name: <input type="text" name="name"></p>
     <p>Slug: <input type="text" name="slug"></p>
