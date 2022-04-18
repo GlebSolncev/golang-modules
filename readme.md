@@ -1,6 +1,6 @@
 Simple CRUD
 
-http endpoint: localhost:8081/pages
+http endpoint: localhost:8081/todo
 You can create, update, read and delete pages.
 
 Also you can edit save method. I have i methods: StructMethod and FileMethod
