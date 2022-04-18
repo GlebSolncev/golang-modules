@@ -34,7 +34,7 @@
         <ul>
             {{range .todos}}
             {{if (eq .Status "Start")}}
-            <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - {{.Status}} <a href="/todo/{{.Id}}">[E]</a> <a href="/todo/{{.Id}}/delete">[X]</a></li>
+            <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a href="/todo/{{.Id}}/delete">[X]</a></li>
             {{end}}
             {{end}}
         </ul>
@@ -44,7 +44,7 @@
         <ul>
             {{range .todos}}
             {{if (eq .Status "InProcess")}}
-            <li> <a href="/todo/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todo/{{.Id}}/delete">[X]</a></li>
+            <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a href="/todo/{{.Id}}/delete">[X]</a></li>
             {{end}}
             {{end}}
         </ul>
@@ -54,7 +54,7 @@
         <ul>
             {{range .todos}}
             {{if (eq .Status "Done")}}
-            <li> <a href="/todo/{{.Id}}">[SHOW]</a>{{.Id}} ) {{.Name}} - {{.Status}} <a href="/todo/{{.Id}}/delete">[X]</a></li>
+            <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a href="/todo/{{.Id}}/delete">[X]</a></li>
             {{end}}
             {{end}}
         </ul>
