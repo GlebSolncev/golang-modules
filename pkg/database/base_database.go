@@ -1,12 +1,18 @@
 package database
 
+import (
+	"crud/pkg/path"
+)
+
 type (
 	DBMethods interface {
 		Get() []byte
 		Save(data []byte) bool
 	}
 
-	NewMethod struct{}
+	NewMethod struct {
+		Filename string
+	}
 )
 
 var (
@@ -14,10 +20,11 @@ var (
 )
 
 func (n NewMethod) Start() DBMethods {
+	filename = path.GetBasePath(n.Filename)
 	return defaultMethod
 }
 
-var filename = "storage/todo.json"
+var filename = path.GetBasePath("storage/todo.json")
 
 func check(err error) {
 	if err != nil {

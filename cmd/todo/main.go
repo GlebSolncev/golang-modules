@@ -1,9 +1,10 @@
 package main
 
 import (
-	"crud/app"
+	"crud/internal/app"
 )
 
+//go:generate echo "Build my app"
 func main() {
 	app.Start()
 }

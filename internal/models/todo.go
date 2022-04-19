@@ -1,62 +1,44 @@
 package models
 
 import (
-	"crud/services/database"
+	"crud/pkg/database"
 	"encoding/json"
-	"fmt"
 	"github.com/labstack/echo"
 	"strconv"
 )
 
-type (
-	Todo struct {
-		Id     int    `json:"id"`
-		Slug   string `json:"slug"`
-		Name   string `json:"name"`
-		Status string `json:"status"`
-	}
-	Todos struct {
-		Todos []*Todo `json:"todo"`
-	}
+var (
+	manage = database.NewMethod{"storage/todo.json"}.Start()
+	Parent = Model{}
 )
 
-var manage = database.NewMethod{}.Start()
-
-func check(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
-func GetAll() []Todo {
+func GetAllTodos() []Todo {
 	var (
 		todos []Todo
-		data  = manage.Get()
 	)
 
-	if len(data) >= 1 {
-		err := json.Unmarshal(data, &todos)
-		check(err)
-	}
+	b, _ := json.Marshal(Parent.GetAll())
+	err := json.Unmarshal(b, &todos)
+	check(err)
 
 	return todos
 }
 
 func UpdateTodo(c echo.Context) *Todo {
 	var (
-		id, _ = strconv.Atoi(c.Param("id"))
-		todos = GetAll()
+		id, _ = strconv.ParseFloat(c.Param("id"), 64)
+		todos = Parent.GetAll()
 		todo  = new(Todo)
 		err   = c.Bind(todo)
 	)
 	check(err)
 
 	for k, item := range todos {
-		if id == item.Id {
+		if id == item["id"] {
 			//todos[k].Id = todo.Id
-			todos[k].Slug = todo.Slug
-			todos[k].Name = todo.Name
-			todos[k].Status = todo.Status
+			todos[k]["slug"] = todo.Slug
+			todos[k]["name"] = todo.Name
+			todos[k]["status"] = todo.Status
 		}
 	}
 
@@ -66,9 +48,12 @@ func UpdateTodo(c echo.Context) *Todo {
 	return todo
 }
 
-func RemoveFromList(arr []Todo, id int) []Todo {
-	newArr := make([]Todo, len(arr)-1)
-	k := 0
+func DelById(arr []Todo, id int) []Todo {
+	var (
+		newArr = make([]Todo, len(arr)-1)
+		k      = 0
+	)
+
 	for _, item := range arr {
 		if item.Id != id {
 			newArr[k] = item
@@ -81,21 +66,18 @@ func RemoveFromList(arr []Todo, id int) []Todo {
 
 func DeleteTodo(c echo.Context) {
 	var (
-		id, _    = strconv.Atoi(c.Param("id"))
-		todos    = GetAll()
-		newTodos []Todo
+		id, _ = strconv.Atoi(c.Param("id"))
+		todos = GetAllTodos()
 	)
 
-	newTodos = RemoveFromList(todos, id)
-	fmt.Println("X >>> ", newTodos)
-	data, _ := json.Marshal(newTodos)
+	data, _ := json.Marshal(DelById(todos, id))
 	manage.Save(data)
 }
 
 func FindById(id int) Todo {
 	var (
 		resultTodo Todo
-		todos      = GetAll()
+		todos      = GetAllTodos()
 	)
 
 	for _, todo := range todos {

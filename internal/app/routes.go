@@ -1,20 +1,17 @@
 package app
 
 import (
-	"crud/controllers"
+	"crud/internal/controllers"
 	"github.com/labstack/echo"
-	"net/http"
 )
 
 func Routes(e *echo.Echo) {
-	e.GET("/", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "OK")
-	})
+	e.GET("/", controllers.HomePage)
 
 	todo := e.Group("/todo")
-	todo.GET("", controllers.GetTodos).Name = "index"
+	todo.GET("", controllers.GetTodos)
 	todo.POST("/store", controllers.StoreTodo)
-	todo.GET("/:id", controllers.ShowTodo).Name = "show"
+	todo.GET("/:id", controllers.ShowTodo)
 	todo.POST("/:id", controllers.UpdateTodo)
 	todo.GET("/:id/delete", controllers.DeleteTodo)
 

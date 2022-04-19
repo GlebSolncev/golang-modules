@@ -1,18 +1,32 @@
 package controllers
 
 import (
-	"crud/models"
+	"crud/internal/models"
 	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
 )
 
+type ResponseBody struct {
+	Page  string
+	Name  string
+	Todos []models.Todo
+	Todo  models.Todo
+}
+
+func HomePage(c echo.Context) error {
+	return c.Render(http.StatusOK, "welcome.tmpl", ResponseBody{
+		Page: "welcome",
+	})
+}
+
 func GetTodos(c echo.Context) error {
-	return c.Render(http.StatusOK, "home.html", map[string]interface{}{
-		"name":  "Index",
-		"todos": models.GetAll(),
-		"todo":  nil,
+	println("GET TODOS")
+	return c.Render(http.StatusOK, "todo.tmpl", ResponseBody{
+		Page:  "index",
+		Todos: models.GetAllTodos(),
+		Todo:  models.Todo{},
 	})
 }
 
@@ -23,15 +37,11 @@ func ShowTodo(c echo.Context) error {
 		todo       = models.FindById(id)
 	)
 
-	if todo.Slug == "" {
-		statusCode = http.StatusNotFound
-		todo = models.Todo{}
-	}
-
-	return c.Render(statusCode, "home.html", map[string]interface{}{
-		"name":  "Show",
-		"todos": models.GetAll(),
-		"todo":  todo,
+	//map[string]interface{}{
+	return c.Render(statusCode, "todo.tmpl", ResponseBody{
+		Name:  "show",
+		Todos: models.GetAllTodos(),
+		Todo:  todo,
 	})
 }
 
@@ -56,14 +66,7 @@ func UpdateTodo(c echo.Context) error {
 }
 
 func DeleteTodo(c echo.Context) error {
-	var (
-		statusCode = http.StatusOK
-	)
 	models.DeleteTodo(c)
 
-	return c.Render(statusCode, "home.html", map[string]interface{}{
-		"name":  "Home",
-		"todos": models.GetAll(),
-		"todo":  nil,
-	})
+	return c.Redirect(http.StatusFound, "/todo")
 }
