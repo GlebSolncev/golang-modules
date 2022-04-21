@@ -1,26 +1,43 @@
+MAIN_PATH = "./cmd/todo"
+BUILD_FILENAME=$$(date +'%H:%M:%S')
+BUILD_PATH="builds/build-"$$(date +'%H:%M')
+
+TEST=ON
+ifeq ($(package),)
+    STATUS='echo "Sorry but i have not the package. Add option package, ex: make setup package=[http]"'
+else
+    STATUS="go get $(package)"
+endif
 
 help:
-	@echo "run - Run application"
+	@echo "------------------------------------------------------------------------"
+	@echo "\t run - Run application"
+	@echo "\t build - Build app. save in folder: 'builds'"
+	@echo "\t build-and-run - Build app in 'builds' and run"
+	@echo "\t get [package=[github....]] - install external package"
+	@echo "\t test - Testing application"
+	@echo "\t run - Run application"
+	@echo "------------------------------------------------------------------------"
 
 run:
-	@go run ./cmd/todo/main.go
+	@go run $(MAIN_PATH)
 
 build:
-	@echo "Creating builds/build-$$(date +'%H:%M')"
-	@go build cmd/crud/main.go
-	@mkdir -p "builds${FILENAME}"
-	@mv main "builds/build-$$(date +'%H:%M')"
-	@echo "Created builds/build-$$(date +'%H:%M')"
+	@go build -o $(BUILD_PATH) $(MAIN_PATH)
+	@echo "OK. DONE! -> $(BUILD_PATH)"
 
 build-and-run: build
-	@./&$(date +'%H:%M')
+	@./$(BUILD_PATH)
+
+get: setup vend
+
+test:
+	@go test $(MAIN_PATH)
 
 setup:
-	go get $(package)
-	@echo "OK"
+	@eval $(STATUS)
 
 vend:
 	go mod vendor
 	@echo "OK"
 
-get: setup vend

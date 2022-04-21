@@ -1,6 +1,7 @@
 package app
 
 import (
+	"crud/pkg/path"
 	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -19,7 +20,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, _ echo.Con
 
 var (
 	t = &Template{
-		templates: template.Must(template.ParseGlob("web/*.tmpl")),
+		templates: template.Must(template.ParseGlob(path.GetBasePath("web/*.tmpl"))),
 	}
 )
 

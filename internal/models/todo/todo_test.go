@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetAllTodos(t *testing.T) {
+func TestGetAll(t *testing.T) {
 	all := GetAll()
 
 	for _, item := range all {
@@ -57,4 +57,10 @@ func TestStore(t *testing.T) {
 		t.Log("New collect: ", GetAll())
 		t.Fatal("Problem with add new item")
 	}
+}
+
+func TestStart(t *testing.T) {
+	t.Run("GetAll", TestGetAll)
+	t.Run("GetAll", TestDeleteTodo)
+	t.Run("GetAll", TestStore)
 }
