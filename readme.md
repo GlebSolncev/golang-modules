@@ -1,29 +1,34 @@
 Simple CRUD
 
-http endpoint: localhost:8081/todo
-You can create, update, read and delete pages.
-
-Also you can edit save method. I have i methods: StructMethod and FileMethod
-Please, switch in services/database/base_database.go
+http endpoint: localhost:8081
+You can create, update, read and delete todo items.
+You can update method for save data (StructMethod and FileMethod). Path pkg/database/base_database.go
 
 set:
-```go
-    defaultMethod DBMethods = &StructMethod{}
+```text
+    DefaultMethod DBMethods = &StructMethod{}
 ```
 or
 
-```go
-    defaultMethod DBMethods = &FileMethod{}
+```text
+    DefaultMethod DBMethods = &FileMethod{}
 ```
 
 If setup FileMethod:
-- Create new file in storage dir: page.json and save data about pages.
+- Create new file in storage dir: todo.json and save data about pages.
 
-If setup StrctMethod:
+If setup StructMethod:
 - Save data in memory 
 
 
-install guide:
+Runing:
 ```shell
-    go run .
+    make run
 ```
+
+
+Check info about commands:
+```shell
+    make help
+```
+
