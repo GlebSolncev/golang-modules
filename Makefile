@@ -12,10 +12,15 @@ build:
 	@mv main "builds/build-$$(date +'%H:%M')"
 	@echo "Created builds/build-$$(date +'%H:%M')"
 
+build-and-run: build
+	@./&$(date +'%H:%M')
 
-build-and-run:
-	@go build
-	@./crud
+setup:
+	go get $(package)
+	@echo "OK"
 
-vendor:
+vend:
 	go mod vendor
+	@echo "OK"
+
+get: setup vend

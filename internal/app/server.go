@@ -1,10 +1,12 @@
 package app
 
 import (
+	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"html/template"
 	"io"
+	"os"
 )
 
 type Template struct {
@@ -30,5 +32,8 @@ func Start() {
 	e.Use(middleware.Recover())
 
 	Routes(e)
-	e.Logger.Fatal(e.Start(":8081"))
+
+	//host:port
+	fmt.Println(os.Getenv("APP_HOST") + ":" + os.Getenv("APP_PORT"))
+	e.Logger.Fatal(e.Start(os.Getenv("APP_HOST") + ":" + os.Getenv("APP_PORT")))
 }

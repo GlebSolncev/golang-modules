@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo"
 	"net/http"
 	"strconv"
+	_ "unsafe"
 )
 
 type ResponseBody struct {
@@ -15,6 +16,7 @@ type ResponseBody struct {
 	Todo  todo.Attributes
 }
 
+//go:linkname HomePage example/ex.MyFunc
 func HomePage(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "welcome.tmpl", ResponseBody{
