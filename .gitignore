@@ -1,7 +1,11 @@
 *.iml
 *.ipr
 *.iws
+!ent/generate.go
+!ent/schema
 .env
+!.env.example
+/ent/
 .idea/
 /build/
 /dist/

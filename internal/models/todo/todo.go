@@ -8,12 +8,24 @@ import (
 	"strconv"
 )
 
+//go:generate stringer --type=Statuses
+
+type Statuses int
+
+const (
+	Draft Statuses = iota
+	Start
+	InProcess
+	Review
+	Done
+)
+
 type (
 	Attributes struct {
 		Id     int    `json:"id"`
 		Slug   string `json:"slug"`
 		Name   string `json:"name"`
-		Status string `json:"status"`
+		Status string `json:"status" binding:"required,gte=0,lte=3"`
 	}
 )
 

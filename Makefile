@@ -19,6 +19,10 @@ help:
 	@echo "\t run - Run application"
 	@echo "------------------------------------------------------------------------"
 
+generate:
+	go generate ./internal/models/todo/todo.go
+	go generate ./env/generate.go
+
 run:
 	@go run $(MAIN_PATH)
 
@@ -40,4 +44,3 @@ setup:
 vend:
 	go mod vendor
 	@echo "OK"
-
