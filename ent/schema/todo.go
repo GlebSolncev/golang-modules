@@ -15,13 +15,13 @@ func (Todo) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int("id").
 			Positive(),
-		field.String("Name").
+		field.String("name").
 			Default("Null"),
-		field.String("Slug").
+		field.String("slug").
 			Default("Null"),
-		field.Enum("Status").
-			Values("Draft", "Start", "InProcess", "Review", "Done").
-			Default("Start"),
+		field.Enum("status").
+			Values("Todo", "InProgress", "Done", "Review").
+			Default("Todo"),
 	}
 }
 

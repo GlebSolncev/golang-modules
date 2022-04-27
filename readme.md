@@ -23,9 +23,8 @@ If setup StructMethod:
 
 Runing:
 ```shell
-    make run
+     make run
 ```
-
 
 Check info about commands:
 ```shell

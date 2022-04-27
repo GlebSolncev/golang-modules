@@ -47,38 +47,54 @@
 <main>
     <div class="container">
         <div class="item">
-            <p class="header"><b>Start</b></p>
+            <p class="header"><b>Todo</b></p>
             <ul>
                 {{range .Todos}}
-                {{if (eq .Status "Start")}}
-                <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a
+                {{if (eq .Status "Todo")}}
+                <li> <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a
                         href="/todo/{{.Id}}/delete">[X]</a></li>
                 {{end}}
                 {{end}}
             </ul>
         </div>
+
         <div class="item">
-            <p class="header"><b>In process</b></p>
+            <p class="header"><b>In progress</b></p>
             <ul>
                 {{range .Todos}}
-                {{if (eq .Status "InProcess")}}
-                <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a
+                {{if (eq .Status "InProgress")}}
+                <li> <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a
                         href="/todo/{{.Id}}/delete">[X]</a></li>
                 {{end}}
                 {{end}}
             </ul>
         </div>
+
         <div class="item">
             <p class="header"><b>Done</b></p>
             <ul>
                 {{range .Todos}}
                 {{if (eq .Status "Done")}}
-                <li> {{.Id}} ) <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a
+                <li> <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a
                         href="/todo/{{.Id}}/delete">[X]</a></li>
                 {{end}}
                 {{end}}
             </ul>
         </div>
+
+        <div class="item">
+            <p class="header"><b>Review</b></p>
+            <ul>
+                {{range .Todos}}
+                {{if (eq .Status "Review")}}
+                <li> <a href="/todo/{{.Id}}">{{.Name}}</a> - <a href="/todo/{{.Id}}">[E]</a> <a
+                        href="/todo/{{.Id}}/delete">[X]</a></li>
+                {{end}}
+                {{end}}
+            </ul>
+        </div>
+
+
 
     </div>
 
@@ -105,9 +121,9 @@
                 <p>Status:
                     <select name="status">
                         <option value="{{.Todo.Status}}">-- Select --</option>
-                        <option value="Start">Start</option>
-                        <option value="InProcess">InProcess</option>
-                        <option value="Done">Done</option>
+                        {{range $k, $e := .Status}}
+                        <option value="{{$k}}">{{$e}}</option>
+                        {{end}}
                     </select>
                 </p>
                 <input type="submit" value="Update">
@@ -124,9 +140,9 @@
                 <p>Slug: <input type="text" name="slug"></p>
                 <p>Status:
                     <select name="status">
-                        <option value="Start">Start</option>
-                        <option value="InProcess">InProcess</option>
-                        <option value="Done">Done</option>
+                        {{range $k, $e := .Status}}
+                            <option value="{{$k}}">{{$e}}</option>
+                        {{end}}
                     </select>
                 </p>
 

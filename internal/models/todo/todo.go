@@ -13,11 +13,10 @@ import (
 type Statuses int
 
 const (
-	Draft Statuses = iota
-	Start
-	InProcess
-	Review
+	Todo Statuses = iota
+	InProgress
 	Done
+	Review
 )
 
 type (
@@ -33,16 +32,26 @@ var (
 	manage = database.NewMethod{Filename: "storage/todo.json"}.Start()
 )
 
+func GetStatuses() []Statuses {
+	ts := make([]Statuses, int(Review)+1)
+	for i := 0; i <= int(Review); i++ {
+		ts[i] = Statuses(i)
+	}
+	return ts
+}
+
 func GetAll() []Attributes {
 	var (
 		todos []Attributes
 		data  = manage.Get()
 	)
 
-	err := json.Unmarshal(data, &todos)
-	helpers.Check(err)
-
-	return todos
+	if string(data) != "" {
+		err := json.Unmarshal(data, &todos)
+		helpers.Check(err)
+		return todos
+	}
+	return make([]Attributes, 0)
 }
 
 func SetModel(c echo.Context) *Attributes {
@@ -64,7 +73,9 @@ func SetModel(c echo.Context) *Attributes {
 		if id == item.Id {
 			todos[k].Slug = todo.Slug
 			todos[k].Name = todo.Name
-			todos[k].Status = todo.Status
+
+			num, _ := strconv.ParseUint(todo.Status, 10, 32)
+			todos[k].Status = Statuses(int(num)).String()
 		}
 	}
 
@@ -122,11 +133,8 @@ func Store(todo *Attributes) bool {
 		helpers.Check(err)
 	}
 
-	if len(todos) > 0 {
-		todo.Id = todos[len(todos)-1].Id + 1
-	} else {
-		todo.Id = 1
-	}
+	num, _ := strconv.ParseUint(todo.Status, 10, 32)
+	todo.Status = Statuses(int(num)).String()
 
 	todos = append(todos, todo)
 	data, err = json.Marshal(todos)

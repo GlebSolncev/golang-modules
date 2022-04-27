@@ -10,10 +10,11 @@ import (
 )
 
 type ResponseBody struct {
-	Page  string
-	Name  string
-	Todos []todo.Attributes
-	Todo  todo.Attributes
+	Page   string
+	Name   string
+	Status []todo.Statuses
+	Todos  []todo.Attributes
+	Todo   todo.Attributes
 }
 
 //go:linkname HomePage example/ex.MyFunc
@@ -27,9 +28,10 @@ func HomePage(c echo.Context) error {
 func GetTodos(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "todo.tmpl", ResponseBody{
-		Page:  "index",
-		Todos: todo.GetAll(),
-		Todo:  todo.Attributes{},
+		Page:   "index",
+		Todos:  todo.GetAll(),
+		Status: todo.GetStatuses(),
+		Todo:   todo.Attributes{},
 	})
 }
 
@@ -43,9 +45,10 @@ func ShowTodo(c echo.Context) error {
 	helpers.Check(err)
 
 	return c.Render(statusCode, "todo.tmpl", ResponseBody{
-		Name:  "show",
-		Todos: todo.GetAll(),
-		Todo:  model,
+		Name:   "show",
+		Status: todo.GetStatuses(),
+		Todos:  todo.GetAll(),
+		Todo:   model,
 	})
 }
 

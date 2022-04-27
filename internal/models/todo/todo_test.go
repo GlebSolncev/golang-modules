@@ -2,7 +2,6 @@ package todo
 
 import (
 	"encoding/json"
-	"fmt"
 	"testing"
 )
 
@@ -51,6 +50,10 @@ func TestStore(t *testing.T) {
 	)
 
 	_ = json.Unmarshal(todo, &model)
+	for _, item := range all {
+		item.Id = item.Id + 1
+	}
+
 	Store(model)
 
 	if len(all) >= len(GetAll()) {
@@ -58,10 +61,6 @@ func TestStore(t *testing.T) {
 		t.Log("New collect: ", GetAll())
 		t.Fatal("Problem with add new item")
 	}
-}
-
-func TestSetModel(t *testing.T) {
-	fmt.Println(Statuses(1))
 }
 
 func TestStart(t *testing.T) {
