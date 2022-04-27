@@ -1,11 +1,12 @@
 *.iml
 *.ipr
 *.iws
-!ent/generate.go
-!ent/schema
+!pkg/ent/generate.go
+!pkg/ent/schema
 .env
 !.env.example
-/ent/
+/storage
+/pkg/ent/
 .idea/
 /build/
 /dist/

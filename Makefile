@@ -10,18 +10,19 @@ else
 endif
 
 help:
-	@echo "------------------------------------------------------------------------"
-	@echo "\t run - Run application"
-	@echo "\t build - Build app. save in folder: 'builds'"
-	@echo "\t build-and-run - Build app in 'builds' and run"
-	@echo "\t get [package=[github....]] - install external package"
-	@echo "\t test - Testing application"
-	@echo "\t run - Run application"
+	@echo "-----------------------------CRUD-LIST-TODO-----------------------------"
+	@echo "\t run\t\t\t\t- Run application"
+	@echo "\t generate(gen)\t\t\t- Generate list packages"
+	@echo "\t build\t\t\t\t- Build app. save in folder: 'builds'"
+	@echo "\t build-and-run(bar)\t\t- Build app in 'builds' and run"
+	@echo "\t get [package=[github....]]\t- install external package"
+	@echo "\t test\t\t\t\t- Testing application"
+	@echo "\t run\t\t\t\t- Run application"
 	@echo "------------------------------------------------------------------------"
 
-generate:
+generate, gen:
 	go generate ./internal/models/todo/todo.go
-	go generate ./env/generate.go
+	go generate ./pkg/env/generate.go
 
 run:
 	@go run $(MAIN_PATH)
@@ -30,7 +31,7 @@ build:
 	@go build -o $(BUILD_PATH) $(MAIN_PATH)
 	@echo "OK. DONE! -> $(BUILD_PATH)"
 
-build-and-run: build
+build-and-run, bar: build
 	@./$(BUILD_PATH)
 
 get: setup vend
