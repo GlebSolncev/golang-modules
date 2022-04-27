@@ -3,17 +3,28 @@ Simple CRUD
 
 http endpoint: localhost:8081
 You can create, update, read and delete todo items.
-You can update method for save data (StructMethod and FileMethod). Path pkg/database/base_database.go
+You can update method for save data (StructMethod and FileMethod). Path pkg/database/methods.go Line: 15
 
-set:
+Set to Struct(var) as memory:
 ```text
-    DefaultMethod DBMethods = &StructMethod{}
+    defaultMethod contracts.DBMethods = &memory.Method{}
 ```
-or
+Or u can set to File as memory:
 
 ```text
-    DefaultMethod DBMethods = &FileMethod{}
+    defaultMethod contracts.DBMethods = &memory.Method{}
 ```
+Or u can set to SQLITE as memory
+```text
+    defaultMethod contracts.DBMethods = &sqlite.Method{}
+```
+
+## Lib list:
+- [Labstack echo](https://echo.labstack.com/)
+- [ent.](https://entgo.io/)
+- godotenv
+- go-sqlite3
+-
 
 If setup FileMethod:
 - Create new file in storage dir: todo.json and save data about pages.
