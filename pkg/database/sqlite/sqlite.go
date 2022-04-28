@@ -2,7 +2,7 @@ package sqlite
 
 import (
 	"context"
-	"crud/ent"
+	"crud/pkg/ent"
 	"crud/pkg/helpers"
 	"crud/pkg/path"
 	"fmt"

@@ -1,6 +1,7 @@
 package file
 
 import (
+	"crud/pkg/database/contracts"
 	"crud/pkg/helpers"
 	"encoding/json"
 	"io/ioutil"
@@ -30,7 +31,7 @@ func getCollectWithUpdIds(data []byte) []byte {
 	return data
 }
 
-func (m *Method) Save(data []byte) bool {
+func (m *Method) Save(data []byte, sType contracts.SaveType) bool {
 	helpers.Check(ioutil.WriteFile(filename, getCollectWithUpdIds(data), 0644))
 
 	return true

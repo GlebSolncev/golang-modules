@@ -2,8 +2,8 @@ package sqlite
 
 import (
 	"context"
-	"crud/ent"
 	"crud/pkg/database/contracts"
+	"crud/pkg/ent"
 )
 
 type (

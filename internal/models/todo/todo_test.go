@@ -1,6 +1,7 @@
 package todo
 
 import (
+	"crud/pkg/ent"
 	"encoding/json"
 	"testing"
 )
@@ -9,7 +10,7 @@ func TestGetAll(t *testing.T) {
 	all := GetAll()
 
 	for _, item := range all {
-		if item.Id == 0 {
+		if item.ID == 0 {
 			t.Log(item)
 			t.Fatal("We have problem with json file. I have not an ID")
 		}
@@ -33,7 +34,7 @@ func TestGetAll(t *testing.T) {
 
 func TestDeleteTodo(t *testing.T) {
 	all := GetAll()
-	collAftDel := DelModel(all[0].Id)
+	collAftDel := DelModel(all[0].ID)
 
 	if len(all) <= len(collAftDel) {
 		t.Log("OLD data: ", all)
@@ -46,12 +47,12 @@ func TestStore(t *testing.T) {
 	var (
 		all     = GetAll()
 		todo, _ = json.Marshal(all[len(all)-1])
-		model   = new(Attributes)
+		model   = new(ent.Todo)
 	)
 
 	_ = json.Unmarshal(todo, &model)
 	for _, item := range all {
-		item.Id = item.Id + 1
+		item.ID = item.ID + 1
 	}
 
 	Store(model)

@@ -1,6 +1,7 @@
 package memory
 
 import (
+	"crud/pkg/database/contracts"
 	"crud/pkg/helpers"
 	"encoding/json"
 )
@@ -22,7 +23,8 @@ func getCollectWithUpdIds(data []byte) []byte {
 	return data
 }
 
-func (m *Method) Save(data []byte) bool {
+func (m *Method) Save(data []byte, sType contracts.SaveType) bool {
 	db.Data = getCollectWithUpdIds(data)
+
 	return true
 }

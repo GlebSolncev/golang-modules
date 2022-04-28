@@ -6,7 +6,7 @@ go 1.18
 require (
 	entgo.io/ent v0.10.2-0.20220321093754-edd968490ea2
 	github.com/joho/godotenv v1.4.0
-	github.com/labstack/echo v3.3.10+incompatible
+	github.com/labstack/echo/v4 v4.7.2
 	github.com/mattn/go-sqlite3 v1.14.12
 )
 
@@ -14,8 +14,8 @@ require (
 	ariga.io/atlas v0.3.8-0.20220314111236-b2171e04c5b2 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.10.0 // indirect
@@ -33,4 +33,5 @@ require (
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/sys v0.0.0-20220422013727-9388b58f7150 // indirect
 	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
 )

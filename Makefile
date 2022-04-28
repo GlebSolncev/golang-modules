@@ -11,6 +11,7 @@ endif
 
 help:
 	@echo "-----------------------------CRUD-LIST-TODO-----------------------------"
+	@echo "\t up\t\t\t\t- Build and run application"
 	@echo "\t run\t\t\t\t- Run application"
 	@echo "\t generate(gen)\t\t\t- Generate list packages"
 	@echo "\t build\t\t\t\t- Build app. save in folder: 'builds'"
@@ -19,6 +20,8 @@ help:
 	@echo "\t test\t\t\t\t- Testing application"
 	@echo "\t run\t\t\t\t- Run application"
 	@echo "------------------------------------------------------------------------"
+
+up: generate, run
 
 generate, gen:
 	go generate ./internal/models/todo/todo.go
@@ -34,7 +37,7 @@ build:
 build-and-run, bar: build
 	@./$(BUILD_PATH)
 
-get: setup vend
+get: setup
 
 test:
 	@go test $(MAIN_PATH)
@@ -42,6 +45,6 @@ test:
 setup:
 	@eval $(STATUS)
 
-vend:
-	go mod vendor
-	@echo "OK"
+#vend:
+#	go mod vendor
+#	@echo "OK"

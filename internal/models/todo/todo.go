@@ -2,118 +2,70 @@ package todo
 
 import (
 	"crud/pkg/database"
+	"crud/pkg/database/contracts"
+	"crud/pkg/ent"
+	"crud/pkg/ent/todo"
 	"crud/pkg/helpers"
 	"encoding/json"
-	"github.com/labstack/echo"
-	"strconv"
-)
-
-//go:generate stringer --type=Statuses
-
-type Statuses int
-
-const (
-	Todo Statuses = iota
-	InProgress
-	Done
-	Review
-)
-
-type (
-	Attributes struct {
-		Id     int    `json:"id"`
-		Slug   string `json:"slug"`
-		Name   string `json:"name"`
-		Status string `json:"status" binding:"required,gte=0,lte=3"`
-	}
 )
 
 var (
 	manage = database.NewMethod{Filename: "storage/todo.json"}.Start()
 )
 
-func GetStatuses() []Statuses {
-	ts := make([]Statuses, int(Review)+1)
-	for i := 0; i <= int(Review); i++ {
-		ts[i] = Statuses(i)
+func GetStatuses() []todo.Status {
+	return []todo.Status{
+		todo.StatusTodo, todo.StatusInProgress, todo.StatusDone, todo.StatusReview,
 	}
-	return ts
 }
 
-func GetAll() []Attributes {
+func GetAll() []ent.Todo {
 	var (
-		todos []Attributes
+		todos []ent.Todo
 		data  = manage.Get()
 	)
 
 	if string(data) != "" {
 		err := json.Unmarshal(data, &todos)
 		helpers.Check(err)
+
 		return todos
 	}
-	return make([]Attributes, 0)
+	return make([]ent.Todo, 0)
 }
 
-func SetModel(c echo.Context) *Attributes {
+func SetModel(model *ent.Todo) *ent.Todo {
+
+	inrec, _ := json.Marshal(model)
+	manage.Save(inrec, contracts.Update)
+
+	return model
+}
+
+func DelModel(id int) []ent.Todo {
 	var (
-		id, _ = strconv.Atoi(c.Param("id"))
-		data  = manage.Get()
-		todos []Attributes
-		todo  = new(Attributes)
+		model ent.Todo
 		err   error
+		data  []byte
 	)
-
-	err = c.Bind(todo)
+	model.ID = id
+	data, err = json.Marshal(model)
 	helpers.Check(err)
 
-	err = json.Unmarshal(data, &todos)
-	helpers.Check(err)
+	manage.Save(data, contracts.Delete)
 
-	for k, item := range todos {
-		if id == item.Id {
-			todos[k].Slug = todo.Slug
-			todos[k].Name = todo.Name
-
-			num, _ := strconv.ParseUint(todo.Status, 10, 32)
-			todos[k].Status = Statuses(int(num)).String()
-		}
-	}
-
-	inrec, _ := json.Marshal(todos)
-	manage.Save(inrec)
-
-	return todo
+	return []ent.Todo{}
 }
 
-func DelModel(id int) []Attributes {
+func FindById(id int) ent.Todo {
 	var (
-		todos  = GetAll()
-		newArr = make([]Attributes, len(todos)-1)
-		k      = 0
+		resultAttr ent.Todo
+		ms         = GetAll()
 	)
 
-	for _, item := range todos {
-		if item.Id != id {
-			newArr[k] = item
-			k++
-		}
-	}
-
-	data, _ := json.Marshal(newArr)
-	manage.Save(data)
-
-	return newArr
-}
-
-func FindById(id int) Attributes {
-	var (
-		resultAttr Attributes
-		todos      = GetAll()
-	)
-
-	for _, todo := range todos {
-		if todo.Id == id {
-			resultAttr = todo
+	for _, m := range ms {
+		if m.ID == id {
+			resultAttr = m
 			break
 		}
 	}
@@ -121,24 +73,8 @@ func FindById(id int) Attributes {
 	return resultAttr
 }
 
-func Store(todo *Attributes) bool {
-	var (
-		todos []*Attributes
-		data  = manage.Get()
-		err   error
-	)
+func Store(model *ent.Todo) bool {
+	dModel, _ := json.Marshal(model)
 
-	if len(data) > 1 {
-		err = json.Unmarshal(data, &todos)
-		helpers.Check(err)
-	}
-
-	num, _ := strconv.ParseUint(todo.Status, 10, 32)
-	todo.Status = Statuses(int(num)).String()
-
-	todos = append(todos, todo)
-	data, err = json.Marshal(todos)
-	helpers.Check(err)
-
-	return manage.Save(data)
+	return manage.Save(dModel, contracts.New)
 }

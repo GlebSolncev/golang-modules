@@ -2,7 +2,7 @@ package database
 
 import (
 	"crud/pkg/database/contracts"
-	"crud/pkg/database/memory"
+	"crud/pkg/database/sqlite"
 )
 
 type (
@@ -12,7 +12,7 @@ type (
 )
 
 var (
-	defaultMethod contracts.DBMethods = &memory.Method{}
+	defaultMethod contracts.DBMethods = &sqlite.Method{}
 )
 
 func (n NewMethod) Start() contracts.DBMethods {
