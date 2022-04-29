@@ -1,12 +1,12 @@
-package crud
+package golang-modules
 
 import (
-	"embed"
-	"github.com/joho/godotenv"
-	"io/fs"
-	"log"
-	"net/http"
-	"os"
+"embed"
+"github.com/joho/godotenv"
+"io/fs"
+"log"
+"net/http"
+"os"
 )
 
 //go:embed web

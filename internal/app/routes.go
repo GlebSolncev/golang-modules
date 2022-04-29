@@ -1,20 +1,24 @@
 package app
 
 import (
-	"crud"
-	"crud/internal/controllers"
 	_ "embed"
 	"github.com/labstack/echo/v4"
+	_ "github.com/swaggo/echo-swagger" // echo-swagger middleware
+	"golang-modules"
+	"golang-modules/internal/controllers"
 	"net/http"
 )
 
 func Routes(e *echo.Echo) {
-	staticHandler := http.FileServer(crud.GetFileSystem())
+	staticHandler := http.FileServer(golang - modules.GetFileSystem())
 	e.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", staticHandler)))
 
-	assetHandler := http.FileServer(crud.GetAssets())
+	assetHandler := http.FileServer(golang - modules.GetAssets())
 	e.GET("/assets/*", echo.WrapHandler(http.StripPrefix("/assets/", assetHandler)))
 
+	// @Param group_id   path int true "Group ID"
+	// ...
+	// @Router / [get]
 	e.GET("/", controllers.HomePage)
 
 	api := e.Group("/api")

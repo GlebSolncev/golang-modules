@@ -1,9 +1,9 @@
 package main
 
 import (
-	"crud/internal/app"
 	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
+	"golang-modules/internal/app"
 )
 
 func init() {

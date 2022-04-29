@@ -1,12 +1,12 @@
 package todo
 
 import (
-	"crud/pkg/database"
-	"crud/pkg/database/contracts"
-	"crud/pkg/ent"
-	"crud/pkg/ent/todo"
-	"crud/pkg/helpers"
 	"encoding/json"
+	"golang-modules/pkg/database"
+	"golang-modules/pkg/database/contracts"
+	"golang-modules/pkg/ent"
+	"golang-modules/pkg/ent/todo"
+	"golang-modules/pkg/helpers"
 )
 
 var (

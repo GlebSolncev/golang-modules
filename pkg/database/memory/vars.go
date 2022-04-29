@@ -1,7 +1,7 @@
 package memory
 
 import (
-	"crud/pkg/database/contracts"
+	"golang-modules/pkg/database/contracts"
 )
 
 type (

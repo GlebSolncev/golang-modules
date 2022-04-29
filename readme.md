@@ -1,5 +1,5 @@
 ![alt text](https://sagacitysoftware.co.in/wp-content/uploads/2020/07/RPA3.jpg)
-Simple CRUD
+Simple golang-modules
 
 http endpoint: localhost:8081
 You can create, update, read and delete todo items.

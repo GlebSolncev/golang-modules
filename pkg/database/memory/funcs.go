@@ -1,9 +1,9 @@
 package memory
 
 import (
-	"crud/pkg/database/contracts"
-	"crud/pkg/helpers"
 	"encoding/json"
+	"golang-modules/pkg/database/contracts"
+	"golang-modules/pkg/helpers"
 )
 
 func (m *Method) Get() []byte {

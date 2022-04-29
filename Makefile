@@ -10,7 +10,7 @@ else
 endif
 
 help:
-	@echo "-----------------------------CRUD-LIST-TODO-----------------------------"
+	@echo "-----------------------------golang-modules-LIST-TODO-----------------------------"
 	@echo "\t up\t\t\t\t- Build and run application"
 	@echo "\t run\t\t\t\t- Run application"
 	@echo "\t generate(gen)\t\t\t- Generate list packages"
@@ -20,6 +20,12 @@ help:
 	@echo "\t test\t\t\t\t- Testing application"
 	@echo "\t run\t\t\t\t- Run application"
 	@echo "------------------------------------------------------------------------"
+
+swag-init:
+	cd ./cmd/swagger/
+	swag init
+swag-run:
+	go run ./cmd/swagger/main.go
 
 up: generate, run
 

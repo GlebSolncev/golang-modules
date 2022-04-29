@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"crud/internal/models/todo"
-	"crud/pkg/ent"
-	model "crud/pkg/ent/todo"
-	"crud/pkg/helpers"
 	"github.com/labstack/echo/v4"
+	"golang-modules/internal/models/todo"
+	"golang-modules/pkg/ent"
+	model "golang-modules/pkg/ent/todo"
+	"golang-modules/pkg/helpers"
 	"net/http"
 	"strconv"
 	"strings"

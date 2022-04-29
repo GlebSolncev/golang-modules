@@ -1,11 +1,11 @@
 package sqlite
 
 import (
-	"crud/pkg/database/contracts"
-	"crud/pkg/ent"
-	"crud/pkg/helpers"
 	"encoding/json"
 	_ "github.com/mattn/go-sqlite3"
+	"golang-modules/pkg/database/contracts"
+	"golang-modules/pkg/ent"
+	"golang-modules/pkg/helpers"
 )
 
 func (m *Method) Get() []byte {

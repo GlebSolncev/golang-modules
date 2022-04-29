@@ -2,11 +2,11 @@ package sqlite
 
 import (
 	"context"
-	"crud/pkg/ent"
-	"crud/pkg/helpers"
-	"crud/pkg/path"
 	"fmt"
 	"github.com/joho/godotenv"
+	"golang-modules/pkg/ent"
+	"golang-modules/pkg/helpers"
+	"golang-modules/pkg/path"
 	"log"
 	"os"
 )

@@ -1,8 +1,8 @@
 package file
 
 import (
-	"crud/pkg/database/contracts"
-	"crud/pkg/path"
+	"golang-modules/pkg/database/contracts"
+	"golang-modules/pkg/path"
 )
 
 type (

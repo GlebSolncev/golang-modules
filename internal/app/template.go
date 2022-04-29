@@ -1,8 +1,8 @@
 package app
 
 import (
-	"crud/pkg/path"
 	"github.com/labstack/echo/v4"
+	"golang-modules/pkg/path"
 	"html/template"
 	"io"
 )

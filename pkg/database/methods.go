@@ -1,8 +1,8 @@
 package database
 
 import (
-	"crud/pkg/database/contracts"
-	"crud/pkg/database/sqlite"
+	"golang-modules/pkg/database/contracts"
+	"golang-modules/pkg/database/sqlite"
 )
 
 type (

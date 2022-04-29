@@ -2,8 +2,8 @@ package sqlite
 
 import (
 	"context"
-	"crud/pkg/database/contracts"
-	"crud/pkg/ent"
+	"golang-modules/pkg/database/contracts"
+	"golang-modules/pkg/ent"
 )
 
 type (
