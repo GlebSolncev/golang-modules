@@ -43,3 +43,6 @@ Check info about commands:
     make help
 ```
 
+## Dev info:
+### Create new model:
+- ent init {{name}}

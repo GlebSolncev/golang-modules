@@ -15,10 +15,8 @@ func (Todo) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int("id").
 			Positive(),
-		field.String("name").
-			Default("Null"),
-		field.String("slug").
-			Default("Null"),
+		field.String("slug").NotEmpty(),
+		field.String("name").NotEmpty(),
 		field.Enum("status").
 			Values("Todo", "InProgress", "Done", "Review").
 			Default("Todo"),
@@ -27,5 +25,7 @@ func (Todo) Fields() []ent.Field {
 
 // Edges of the Todo.
 func (Todo) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+		//edge.To("status", Status.Type),
+	}
 }

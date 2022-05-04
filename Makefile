@@ -21,11 +21,14 @@ help:
 	@echo "\t run\t\t\t\t- Run application"
 	@echo "------------------------------------------------------------------------"
 
+# (dev command) to create model
+create-model:
+	ent init  --target pkg/ent/schema $(model)
+
+
 swag-init:
-	cd ./cmd/swagger/
-	swag init
-swag-run:
-	go run ./cmd/swagger/main.go
+	@swag init -g ./cmd/todo/main.go --output internal/app/docs
+	@echo "OK"
 
 up: generate, run
 
