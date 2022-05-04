@@ -54,24 +54,18 @@ func conn() {
 	cl, err := ent.Open("sqlite3", dataSourceName)
 	helpers.Check(err)
 
-	//defer helpers.Check(c.Close())
-
 	c = cl
 }
 
 func closeConn() {
-	//defer Client.Close()
+	defer c.Close()
 }
 
 func createDB() {
-	c, err := ent.Open("sqlite3", dataSourceName)
-	if err != nil {
-		log.Fatalf("failed opening connection to sqlite: %v", err)
-	}
-	defer helpers.Check(c.Close())
-	// Run the auto migration tool.
+	conn()
 	if err := c.Schema.Create(ctx); err != nil {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
 
+	closeConn()
 }
