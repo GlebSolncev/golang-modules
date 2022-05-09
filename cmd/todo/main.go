@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/GlebSolncev/golang-modules/internal/app"
-	_ "github.com/GlebSolncev/golang-modules/internal/app/docs"
 	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
+	"golang-modules/internal/app"
+	_ "golang-modules/internal/app/docs"
 )
 
 func init() {

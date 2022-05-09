@@ -2,7 +2,7 @@
 *.ipr
 *.iws
 !pkg/ent/generate.go
-!pkg/ent/schema
+!pkg/ent/schema/*
 .env
 !.env.example
 /storage

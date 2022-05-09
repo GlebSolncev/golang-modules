@@ -1,13 +1,12 @@
 package controllers
 
 import (
-	"fmt"
-	_ "github.com/GlebSolncev/golang-modules/internal/app/docs" // swagger
-	"github.com/GlebSolncev/golang-modules/internal/app/models"
-	"github.com/GlebSolncev/golang-modules/pkg/ent"
-	"github.com/GlebSolncev/golang-modules/pkg/helpers"
 	"github.com/labstack/echo/v4"
-	_ "github.com/swaggo/echo-swagger" // echo-swagger middleware
+	_ "github.com/swaggo/echo-swagger"   // echo-swagger middleware
+	_ "golang-modules/internal/app/docs" // swagger
+	"golang-modules/internal/app/models"
+	"golang-modules/pkg/ent"
+	"golang-modules/pkg/helpers"
 	"net/http"
 	"strconv"
 	_ "unsafe"
@@ -18,10 +17,21 @@ type (
 		Controllers
 		HttpType string
 	}
+
+	TodoS struct {
+		// ID of the ent.
+		ID int `json:"id"`
+		// Slug holds the value of the "slug" field.
+		Slug string `json:"slug"`
+		// Name holds the value of the "name" field.
+		Name *string `json:"name"`
+		// Status holds the value of the "status" field.
+		Status models.TodoStatus `json:"status"`
+	}
 )
 
 var (
-	todo = models.Todo{}
+	todo = models.TodoModel{}
 )
 
 // Index godoc
@@ -81,21 +91,15 @@ func (tc TodoController) Show(c echo.Context) error {
 // @Router /todo [post]
 func (tc TodoController) Store(c echo.Context) error {
 	var (
-		json = new(ent.Todo) //= map[string]interface{}{}
-		//m = new(storeRequest)
-		//statusId, _ = strconv.Atoi(c.Param("status"))
-		err error
+		item = new(ent.Todo)
+		err  error
 	)
-	if err := c.Bind(&json); err != nil {
+
+	if err := c.Bind(&item); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
-	fmt.Println("json >> ", json)
 
-	//fmt.Println("ITEM >>>", s)
-	res, err := todo.Store(json)
-	//todo.SyncStatus(res, json["status_id"])
-
-	fmt.Println("END")
+	res, err := todo.Store(item)
 	helpers.Check(err)
 
 	if tc.HttpType == "api" {

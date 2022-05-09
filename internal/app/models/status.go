@@ -1,9 +1,9 @@
 package models
 
 import (
-	"github.com/GlebSolncev/golang-modules/pkg/ent"
-	"github.com/GlebSolncev/golang-modules/pkg/ent/status"
-	"github.com/GlebSolncev/golang-modules/pkg/helpers"
+	"golang-modules/pkg/ent"
+	"golang-modules/pkg/ent/status"
+	"golang-modules/pkg/helpers"
 )
 
 type (

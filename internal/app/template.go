@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/GlebSolncev/golang-modules/pkg/path"
 	"github.com/labstack/echo/v4"
+	"golang-modules/pkg/path"
 	"html/template"
 	"io"
 )

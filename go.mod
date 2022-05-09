@@ -1,4 +1,5 @@
-module github.com/GlebSolncev/golang-modules
+//github.com/GlebSolncev/
+module golang-modules
 
 go 1.18
 

@@ -3,13 +3,14 @@ package models
 import (
 	"context"
 	"fmt"
-	"github.com/GlebSolncev/golang-modules/pkg/ent"
-	"github.com/GlebSolncev/golang-modules/pkg/helpers"
-	"github.com/GlebSolncev/golang-modules/pkg/path"
 	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/log"
 	_ "github.com/mattn/go-sqlite3"
+	"golang-modules/pkg/ent"
+	"golang-modules/pkg/helpers"
+	"golang-modules/pkg/path"
 	"os"
+	"time"
 )
 
 var dataSourceName string
@@ -68,4 +69,8 @@ func createDB() {
 	}
 
 	closeConn()
+}
+
+func getTimeNow() time.Time {
+	return time.Now()
 }

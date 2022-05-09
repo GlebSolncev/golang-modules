@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"github.com/GlebSolncev/golang-modules/internal/app/models"
-	"github.com/GlebSolncev/golang-modules/pkg/ent"
-	"github.com/GlebSolncev/golang-modules/pkg/helpers"
 	"github.com/labstack/echo/v4"
+	"golang-modules/internal/app/models"
+	"golang-modules/pkg/ent"
+	"golang-modules/pkg/helpers"
 	"net/http"
 	"strconv"
 )
