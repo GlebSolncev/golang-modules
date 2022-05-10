@@ -1,23 +1,8 @@
 ![alt text](https://sagacitysoftware.co.in/wp-content/uploads/2020/07/RPA3.jpg)
 Simple golang-modules
 
-http endpoint: localhost:8081
-You can create, update, read and delete todo items.
-You can update method for save data (StructMethod and FileMethod). Path pkg/database/methods.go Line: 15
-
-Set to Struct(var) as memory:
-```text
-    defaultMethod contracts.DBMethods = &memory.Method{}
-```
-Or u can set to File as memory:
-
-```text
-    defaultMethod contracts.DBMethods = &memory.Method{}
-```
-Or u can set to SQLITE as memory
-```text
-    defaultMethod contracts.DBMethods = &sqlite.Method{}
-```
+http endpoint: localhost:8080
+replace: .env.example to .env
 
 ## Lib list:
 - [Labstack echo](https://echo.labstack.com/)
