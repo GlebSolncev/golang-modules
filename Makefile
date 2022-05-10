@@ -9,6 +9,9 @@ else
     STATUS="go get $(package)"
 endif
 
+parser-run, pr:
+	@go run cmd/parserURL/main.go
+
 help:
 	@echo "-----------------------------golang-modules-LIST-TODO-----------------------------"
 	@echo "\t up\t\t\t\t- Build and run application"

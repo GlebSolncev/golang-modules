@@ -4,8 +4,8 @@ import (
 	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 	"golang-modules/internal/app"
-	_ "golang-modules/internal/app/docs"
 	"golang-modules/internal/app/models"
+	_ "golang-modules/internal/app/swagger"
 )
 
 // @title Todo CRUD
