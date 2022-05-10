@@ -18,9 +18,9 @@ If setup StructMethod:
 - Save data in memory 
 
 
-Runing:
+UP project:
 ```shell
-     make run
+     make up
 ```
 
 Check info about commands:
