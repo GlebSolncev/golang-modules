@@ -13,3 +13,4 @@
 /out/
 /builds
 /vendor
+internal/app/models/todostatus_enumer.go

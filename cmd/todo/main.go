@@ -5,11 +5,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"golang-modules/internal/app"
 	_ "golang-modules/internal/app/docs"
+	"golang-modules/internal/app/models"
 )
-
-func init() {
-	_ = godotenv.Load(".env")
-}
 
 // @title Todo CRUD
 // @version 1.0
@@ -22,5 +19,8 @@ func init() {
 // @host localhost:8080
 // @BasePath /api
 func main() {
+	_ = godotenv.Load(".env")
+
+	models.Init()
 	app.Start()
 }

@@ -19,6 +19,7 @@ help:
 	@echo "\t get [package=[github....]]\t- install external package"
 	@echo "\t test\t\t\t\t- Testing application"
 	@echo "\t run\t\t\t\t- Run application"
+	@echo "\t swagger-init\t\t\t- Init swagger"
 	@echo "------------------------------------------------------------------------"
 
 # (dev command) to create model
@@ -26,7 +27,7 @@ create-model:
 	ent init  --target pkg/ent/schema $(model)
 
 
-swag-init:
+swagger-init, si:
 	@swag init -g ./cmd/todo/main.go --output internal/app/docs
 	@echo "OK"
 

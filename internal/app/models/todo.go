@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"golang-modules/pkg/ent"
 	"golang-modules/pkg/ent/todo"
 	"golang-modules/pkg/helpers"
@@ -27,14 +26,8 @@ func (TodoModel) GetAll() (interface{}, error) {
 	data, err := c.Todo.
 		Query().
 		Select(todo.FieldID, todo.FieldSlug, todo.FieldName, todo.FieldCreatedAt, todo.FieldStatus).
-		//Select("id", "name", "slug").
-		//WithStatus(func(q *ent.StatusQuery) {
-		//	q.Select(status.FieldID, status.FieldName)
-		//}).
 		All(ctx)
 	closeConn()
-
-	fmt.Println(">>>>>>>> ", data)
 
 	return data, err
 }
@@ -46,7 +39,7 @@ func (TodoModel) UpdateModel(model interface{}) interface{} {
 		UpdateOneID(m.ID).
 		SetName(*m.Name).
 		SetSlug(m.Slug).
-		//SetStatus(m.Status).
+		SetStatus(m.Status).
 		Save(ctx)
 	closeConn()
 	helpers.Check(err)
@@ -76,7 +69,7 @@ func (tm TodoModel) FindById(id int) (interface{}, error) {
 	return m, err
 }
 
-func (TodoModel) Store(model *ent.Todo) (interface{}, error) {
+func (TodoModel) Store(model *ent.Todo) (int, error) {
 	conn()
 	m := c.Todo.Create()
 
@@ -89,5 +82,5 @@ func (TodoModel) Store(model *ent.Todo) (interface{}, error) {
 
 	closeConn()
 
-	return res, err
+	return res.ID, err
 }

@@ -9,6 +9,7 @@ import (
 	"golang-modules/pkg/helpers"
 	"net/http"
 	"strconv"
+	"sync"
 	_ "unsafe"
 )
 
@@ -92,18 +93,29 @@ func (tc TodoController) Show(c echo.Context) error {
 func (tc TodoController) Store(c echo.Context) error {
 	var (
 		item = new(ent.Todo)
-		err  error
+		id   = 0
 	)
 
 	if err := c.Bind(&item); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	res, err := todo.Store(item)
-	helpers.Check(err)
+	wg := sync.WaitGroup{}
 
+	wg.Add(1)
+	go func(model *ent.Todo) {
+		lock := sync.Mutex{}
+
+		lock.Lock()
+		item.ID, _ = todo.Store(model)
+		lock.Unlock()
+
+		wg.Done()
+	}(item)
+
+	wg.Wait()
 	if tc.HttpType == "api" {
-		return c.JSON(http.StatusOK, Response{Page: "Store", Payload: res})
+		return c.JSON(http.StatusOK, Response{Page: "Store", Payload: id})
 	} else {
 		return c.Redirect(http.StatusFound, "/web/todo")
 	}

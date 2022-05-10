@@ -3,7 +3,6 @@ package models
 import (
 	"context"
 	"fmt"
-	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/log"
 	_ "github.com/mattn/go-sqlite3"
 	"golang-modules/pkg/ent"
@@ -13,20 +12,22 @@ import (
 	"time"
 )
 
-var dataSourceName string
-var ctx context.Context
-var c *ent.Client
-
 type Model interface {
-	GetAll() []interface{}
+	GetAll() (interface{}, error)
 	UpdateModel(model interface{}) interface{}
 	DelModel(id int) bool
 	FindById(id int) interface{}
-	Store(model interface{}) bool
+	Store(model interface{}) (int, error)
 }
 
-func init() {
-	_ = godotenv.Load(".env")
+var (
+	dataSourceName string
+	ctx            context.Context
+	c              *ent.Client
+)
+
+func Init() {
+	//_ = godotenv.Load(".env")
 	setDataSourceName()
 	setContext()
 	createDB()

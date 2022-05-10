@@ -74,13 +74,9 @@ func Routes(r *echo.Echo) {
 	/** STATUS **/
 	rApi := r.Group("/api")
 	{
-		rs := rApi.Group("/status")
+		apiStatus := rApi.Group("/status")
 		{
-			rs.GET("", controllers.StatusController{}.Index)
-			rs.POST("", controllers.StatusController{}.Store)
-			rs.GET("/:id", controllers.StatusController{}.Show)
-			rs.PUT("/:id", controllers.StatusController{}.Update)
-			rs.DELETE("/:id", controllers.StatusController{}.Delete)
+			apiStatus.GET("", controllers.StatusController{}.Index)
 		}
 
 		/** TODOs **/
@@ -89,14 +85,14 @@ func Routes(r *echo.Echo) {
 			Claims:     &jwtCustomClaims{},
 			SigningKey: []byte("secret"),
 		}
-		rs.Use(middleware.JWTWithConfig(config))
-		ApiTodo := rApi.Group("/todo")
+		apiTodo := rApi.Group("/todo")
+		apiTodo.Use(middleware.JWTWithConfig(config))
 		{
-			ApiTodo.GET("", controllers.TodoController{HttpType: "api"}.Index)
-			ApiTodo.POST("", controllers.TodoController{HttpType: "api"}.Store)
-			ApiTodo.GET("/:id", controllers.TodoController{HttpType: "api"}.Show)
-			ApiTodo.PUT("/:id", controllers.TodoController{HttpType: "api"}.Update)
-			ApiTodo.DELETE("/:id", controllers.TodoController{HttpType: "api"}.Delete)
+			apiTodo.GET("", controllers.TodoController{HttpType: "api"}.Index)
+			apiTodo.POST("", controllers.TodoController{HttpType: "api"}.Store)
+			apiTodo.GET("/:id", controllers.TodoController{HttpType: "api"}.Show)
+			apiTodo.PUT("/:id", controllers.TodoController{HttpType: "api"}.Update)
+			apiTodo.DELETE("/:id", controllers.TodoController{HttpType: "api"}.Delete)
 		}
 	}
 
