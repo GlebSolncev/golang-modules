@@ -7,9 +7,12 @@ import (
 	"golang-modules/pkg/path"
 	"io/ioutil"
 	"os"
+	"sync"
 )
 
 var pathFile = path.GetBasePath("storage/parser/out.json")
+
+var lock = sync.Mutex{}
 
 func AddLink(req http.Request) string {
 	jsonFile, _ := os.Open(pathFile)
@@ -19,9 +22,11 @@ func AddLink(req http.Request) string {
 	json.Unmarshal(byteValue, &links)
 
 	if CanAddToCollect(req.Url) {
+		lock.Lock()
 		links = append(links, req)
 		file, _ := json.MarshalIndent(links, "", " ")
 		ioutil.WriteFile(pathFile, file, 0644)
+		lock.Unlock()
 	}
 
 	return "OK"

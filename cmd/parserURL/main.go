@@ -49,24 +49,19 @@ func workWithUrl(url string) {
 		fmt.Println("[NATC] " + url)
 	}
 
-	if len(req.CollectLinks) > 2 {
+	if len(req.CollectLinks) > 1 {
 		wg := sync.WaitGroup{}
 
-		//wg.Add(len(req.CollectLinks))
 		for _, newUrl := range req.CollectLinks {
 			wg.Add(1)
 			fmt.Println("NEW SPACE " + newUrl)
 
-			workWithUrl(newUrl)
+			go func(url string) {
+				workWithUrl(url)
 
-			//go func(req http.Request) {
-			//lock.Lock()
-
-			//lock.Unlock()
-			//wg.Done()
-			//}(req)
+				wg.Done()
+			}(newUrl)
 		}
-		//wg.Wait()
-
+		wg.Wait()
 	}
 }
