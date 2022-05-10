@@ -13,4 +13,5 @@
 /out/
 /builds
 /vendor
+/internal/app/swagger/*
 internal/app/models/todostatus_enumer.go
