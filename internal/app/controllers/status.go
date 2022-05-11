@@ -24,7 +24,7 @@ var (
 // @Accept json
 // @Produce json
 // @Success 200 {object} Response
-// @Router /status [get]
+// @Router /api/status [get]
 func (StatusController) Index(c echo.Context) error {
 	all, err := status.GetAll()
 	helpers.Check(err)

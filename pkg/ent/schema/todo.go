@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Todo holds the schema definition for the Todo entity.
+// Tоdo holds the schema definition for the Tоdo entity.
 type Todo struct {
 	ent.Schema
 }
