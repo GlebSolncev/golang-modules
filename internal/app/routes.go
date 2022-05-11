@@ -2,55 +2,13 @@ package app
 
 import (
 	_ "embed"
-	"fmt"
-	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
 	"golang-modules/internal/app/controllers"
 	"golang-modules/pkg/template"
 	"net/http"
-	"time"
 )
-
-type jwtCustomClaims struct {
-	Name  string `json:"name"`
-	Admin bool   `json:"admin"`
-	jwt.StandardClaims
-}
-
-func login(c echo.Context) error {
-	username := c.FormValue("username")
-	password := c.FormValue("password")
-
-	fmt.Println(username, password)
-	// Throws unauthorized error
-	if username != "hello" || password != "world" {
-		return echo.ErrUnauthorized
-	}
-
-	// Set custom claims
-	claims := &jwtCustomClaims{
-		"Admin",
-		true,
-		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
-		},
-	}
-
-	// Create token with claims
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	// Generate encoded token and send it as response.
-	t, err := token.SignedString([]byte("secret"))
-	if err != nil {
-		return err
-	}
-
-	return c.JSON(http.StatusOK, echo.Map{
-		"token": t,
-	})
-}
 
 func Routes(r *echo.Echo) {
 
@@ -69,7 +27,7 @@ func Routes(r *echo.Echo) {
 	r.GET("/", controllers.Welcome{}.Index)
 
 	// Login route
-	r.POST("/login", login)
+	r.POST("/auth", controllers.Auth)
 
 	/** STATUS **/
 	rApi := r.Group("/api")
@@ -82,7 +40,7 @@ func Routes(r *echo.Echo) {
 		/** TODOs **/
 
 		config := middleware.JWTConfig{
-			Claims:     &jwtCustomClaims{},
+			Claims:     &controllers.JwtCustomClaims{},
 			SigningKey: []byte("secret"),
 		}
 		apiTodo := rApi.Group("/todo")

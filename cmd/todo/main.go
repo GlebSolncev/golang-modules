@@ -8,16 +8,16 @@ import (
 	_ "golang-modules/internal/app/swagger"
 )
 
-// @title Todo CRUD
+// @title Tоdo CRUD
 // @version 1.0
-// @description This is a simple CRUD for TODO list
+// @description This is a simple CRUD for Tоdo list
 
 // @contact.name GitHub
 // @contact.url https://github.com/GlebSolncev/golang-modules
 
 // @schemes http
 // @host localhost:8080
-// @BasePath /api
+// @BasePath /
 func main() {
 	_ = godotenv.Load(".env")
 

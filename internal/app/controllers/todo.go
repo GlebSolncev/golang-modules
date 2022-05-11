@@ -38,17 +38,19 @@ var (
 // Index godoc
 // @Summary All todos items with statuses
 // @Description Get todos list with status items
-// @Tags todo
+// @Tags Tоdo
 // @Accept json
 // @Produce json
+// @Param   Authorization  header     string     true  "Token for auth"
 // @Success 200 {object} Response
-// @Router /todo [get]
+// @Failure 404
+// @Router /api/todo [get]
 func (tc TodoController) Index(c echo.Context) error {
 	res, err := todo.GetAll()
 	helpers.Check(err)
 
 	if tc.HttpType == "api" {
-		return c.JSON(http.StatusOK, Response{Page: "Index", Payload: res})
+		return c.JSON(http.StatusOK, Response{NamePage: "Index", Payload: res})
 	} else {
 		return c.Render(http.StatusOK, "todo.tmpl", res)
 	}
@@ -57,12 +59,14 @@ func (tc TodoController) Index(c echo.Context) error {
 // Show godoc
 // @Summary Item from todos list
 // @Description Show item of Todos list
-// @Tags todo
+// @Tags Tоdo
 // @Accept json
 // @Produce json
+// @Param	id				path	int		true 	"Tоdo ID"
+// @Param   Authorization 	header	string	true  	"Token for auth"
 // @Success 200 {object} Response
 // @Failure 404
-// @Router /todo/{ent.Todo.id} [get]
+// @Router /api/todo/{id} [get]
 func (tc TodoController) Show(c echo.Context) error {
 	var (
 		id  int
@@ -75,7 +79,7 @@ func (tc TodoController) Show(c echo.Context) error {
 	helpers.Check(err)
 
 	if tc.HttpType == "api" {
-		return c.JSON(http.StatusOK, Response{Page: "Show", Payload: res})
+		return c.JSON(http.StatusOK, Response{NamePage: "Show", Payload: res})
 	} else {
 		return c.Render(http.StatusOK, "todo.tmpl", res)
 	}
@@ -84,16 +88,17 @@ func (tc TodoController) Show(c echo.Context) error {
 // Store godoc
 // @Summary Add item to todos list
 // @Description Add new item to list
-// @Tags todo
+// @Tags Tоdo
 // @Accept json
 // @Produce json
+// @Param   Authorization 	header	string		true  	"Token for auth"
+// @Param	Body			body	string		true 	"Body for Tоdo item"
 // @Success 200 {object} Response
 // @Failure 404
-// @Router /todo [post]
+// @Router /api/todo [post]
 func (tc TodoController) Store(c echo.Context) error {
 	var (
 		item = new(ent.Todo)
-		id   = 0
 	)
 
 	if err := c.Bind(&item); err != nil {
@@ -115,7 +120,7 @@ func (tc TodoController) Store(c echo.Context) error {
 
 	wg.Wait()
 	if tc.HttpType == "api" {
-		return c.JSON(http.StatusOK, Response{Page: "Store", Payload: id})
+		return c.JSON(http.StatusOK, Response{NamePage: "Store", Payload: item})
 	} else {
 		return c.Redirect(http.StatusFound, "/web/todo")
 	}
@@ -125,12 +130,12 @@ func (tc TodoController) Store(c echo.Context) error {
 // Update godoc
 // @Summary Update item in list TODOs
 // @Description Add new item to list
-// @Tags todo
+// @Tags Todo
 // @Accept json
 // @Produce json
 // @Success 200 {object} Response
 // @Failure 404
-// @Router /todo/{id} [post]
+// @Router /api/todo/{id} [post]
 func (tc TodoController) Update(c echo.Context) error {
 	var (
 		id   = c.Param("id")
@@ -148,7 +153,7 @@ func (tc TodoController) Update(c echo.Context) error {
 	res = todo.UpdateModel(item)
 
 	if tc.HttpType == "api" {
-		return c.JSON(http.StatusOK, Response{Page: "Update", Payload: res})
+		return c.JSON(http.StatusOK, Response{NamePage: "Update", Payload: res})
 	} else {
 		return c.Redirect(http.StatusFound, "/web/todo/"+c.Param("id"))
 	}
@@ -157,12 +162,12 @@ func (tc TodoController) Update(c echo.Context) error {
 // Delete godoc
 // @Summary Delete item from TODOs list
 // @Description Remove item from todos list
-// @Tags todo
+// @Tags Todo
 // @Accept json
 // @Produce json
 // @Success 200 {object} Response
 // @Failure 404
-// @Router /todo/{id}/delete [get]
+// @Router /api/todo/{id}/delete [get]
 func (tc TodoController) Delete(c echo.Context) error {
 	var (
 		id, _ = strconv.Atoi(c.Param("id"))
@@ -171,8 +176,8 @@ func (tc TodoController) Delete(c echo.Context) error {
 
 	if tc.HttpType == "api" {
 		return c.JSON(http.StatusOK, Response{
-			Page:    "Delete",
-			Payload: "OK",
+			NamePage: "Delete",
+			Payload:  "OK",
 		})
 	}
 	return c.Redirect(http.StatusFound, "/web/todo/")

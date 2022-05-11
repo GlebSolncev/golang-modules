@@ -20,7 +20,7 @@ var (
 // Index godoc
 // @Summary All statuses
 // @Description All statuses
-// @Tags status
+// @Tags Status
 // @Accept json
 // @Produce json
 // @Success 200 {object} Response
@@ -30,7 +30,7 @@ func (StatusController) Index(c echo.Context) error {
 	helpers.Check(err)
 
 	return c.JSON(http.StatusOK, Response{
-		Page:    "Index",
-		Payload: all,
+		NamePage: "Index",
+		Payload:  all,
 	})
 }

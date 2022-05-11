@@ -13,7 +13,7 @@ type Welcome struct {
 func (w Welcome) Index(c echo.Context) error {
 	if w.HttpType == "api" {
 		return c.JSON(http.StatusOK, Response{
-			Page: "welcome",
+			NamePage: "welcome",
 		})
 	}
 

@@ -31,7 +31,7 @@ create-model:
 
 
 swagger-init, si:
-	@swag init -g ./cmd/todo/main.go --output internal/app/docs
+	@swag init -g ./cmd/todo/main.go --output internal/app/swagger
 	@echo "OK"
 
 up: generate, run
