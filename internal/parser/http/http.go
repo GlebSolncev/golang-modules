@@ -5,6 +5,7 @@ import (
 	"golang-modules/pkg/helpers"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -31,7 +32,20 @@ func (r Request) GetLinks() Request {
 		link, _ := s.Attr("href")
 
 		if strings.Index(link, r.Url) == 0 {
-			links = append(links, link)
+			l, _ := url.Parse(link)
+			link = l.Scheme + "://" + l.Hostname() + l.Path
+
+			ok := true
+			for _, li := range links {
+				if li == link {
+					ok = false
+					break
+				}
+			}
+
+			if ok {
+				links = append(links, link)
+			}
 		}
 	})
 
