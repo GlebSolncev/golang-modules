@@ -13,21 +13,13 @@ import (
 	_ "unsafe"
 )
 
+// Todo add bulk insert todo items
+
 type (
 	TodoController struct {
 		Controllers
+		Test     bool
 		HttpType string
-	}
-
-	TodoS struct {
-		// ID of the ent.
-		ID int `json:"id"`
-		// Slug holds the value of the "slug" field.
-		Slug string `json:"slug"`
-		// Name holds the value of the "name" field.
-		Name *string `json:"name"`
-		// Status holds the value of the "status" field.
-		Status models.TodoStatus `json:"status"`
 	}
 )
 
@@ -46,11 +38,12 @@ var (
 // @Failure 404
 // @Router /api/todo [get]
 func (tc TodoController) Index(c echo.Context) error {
+	models.SetTypeWork(tc.Test)
 	res, err := todo.GetAll()
 	helpers.Check(err)
 
 	if tc.HttpType == "api" {
-		return c.JSON(http.StatusOK, Response{NamePage: "Index", Payload: res})
+		return c.JSON(http.StatusOK, res) //Response{NamePage: "Index", Payload: res})
 	} else {
 		return c.Render(http.StatusOK, "todo.tmpl", res)
 	}
@@ -73,6 +66,8 @@ func (tc TodoController) Show(c echo.Context) error {
 		err error
 		res interface{}
 	)
+
+	models.SetTypeWork(tc.Test)
 	id, err = strconv.Atoi(c.Param("id"))
 	helpers.Check(err)
 	res, err = todo.FindById(id)
@@ -106,7 +101,6 @@ func (tc TodoController) Store(c echo.Context) error {
 	}
 
 	wg := sync.WaitGroup{}
-
 	wg.Add(1)
 	go func(model *ent.Todo) {
 		lock := sync.Mutex{}
@@ -120,9 +114,9 @@ func (tc TodoController) Store(c echo.Context) error {
 
 	wg.Wait()
 	if tc.HttpType == "api" {
-		return c.JSON(http.StatusOK, Response{NamePage: "Store", Payload: item})
+		return c.JSON(http.StatusCreated, Response{NamePage: "Store", Payload: item})
 	} else {
-		return c.Redirect(http.StatusFound, "/web/todo")
+		return c.Redirect(http.StatusCreated, "/web/todo")
 	}
 
 }
@@ -144,6 +138,7 @@ func (tc TodoController) Update(c echo.Context) error {
 		err  error
 	)
 
+	models.SetTypeWork(tc.Test)
 	if err = c.Bind(item); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
@@ -172,6 +167,8 @@ func (tc TodoController) Delete(c echo.Context) error {
 	var (
 		id, _ = strconv.Atoi(c.Param("id"))
 	)
+
+	models.SetTypeWork(tc.Test)
 	todo.DelModel(id)
 
 	if tc.HttpType == "api" {

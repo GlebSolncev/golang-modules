@@ -21,6 +21,6 @@ import (
 func main() {
 	_ = godotenv.Load(".env")
 
-	models.Init()
+	models.Init(false)
 	app.Start()
 }

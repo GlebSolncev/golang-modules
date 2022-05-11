@@ -1,6 +1,7 @@
 package models
 
 import (
+	"context"
 	"golang-modules/pkg/ent"
 	"golang-modules/pkg/ent/todo"
 	"golang-modules/pkg/helpers"
@@ -26,7 +27,7 @@ func (TodoModel) GetAll() (interface{}, error) {
 	data, err := c.Todo.
 		Query().
 		Select(todo.FieldID, todo.FieldSlug, todo.FieldName, todo.FieldCreatedAt, todo.FieldStatus).
-		All(ctx)
+		All(context.Background())
 	closeConn()
 
 	return data, err

@@ -3,6 +3,7 @@ package models
 import (
 	"context"
 	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/log"
 	_ "github.com/mattn/go-sqlite3"
 	"golang-modules/pkg/ent"
@@ -21,15 +22,17 @@ type Model interface {
 }
 
 var (
+	test           = false
 	dataSourceName string
 	ctx            context.Context
 	c              *ent.Client
 )
 
-func Init() {
+func Init(test bool) {
 	//_ = godotenv.Load(".env")
-	setDataSourceName()
-	setContext()
+	getDataSourceName(test)
+	ctx = context.Background()
+	//setContext()
 	createDB()
 }
 
@@ -37,7 +40,22 @@ func setContext() {
 	ctx = context.Background()
 }
 
-func setDataSourceName() {
+func SetTypeWork(status bool) {
+	test = status
+}
+
+func getDataSourceName(test bool) {
+
+	if test {
+		_ = godotenv.Load(path.GetBasePath(".env.test"))
+	} else {
+		_ = godotenv.Load(path.GetBasePath(".env"))
+	}
+
+	if os.Getenv("DB_DRIVER") == "" {
+		panic("Env Not found")
+	}
+
 	host := os.Getenv("DB_HOST")
 
 	if os.Getenv("DB_DRIVER") == "file" {

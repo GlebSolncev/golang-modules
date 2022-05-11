@@ -46,11 +46,13 @@ func Routes(r *echo.Echo) {
 		apiTodo := rApi.Group("/todo")
 		apiTodo.Use(middleware.JWTWithConfig(config))
 		{
-			apiTodo.GET("", controllers.TodoController{HttpType: "api"}.Index)
-			apiTodo.POST("", controllers.TodoController{HttpType: "api"}.Store)
-			apiTodo.GET("/:id", controllers.TodoController{HttpType: "api"}.Show)
-			apiTodo.PUT("/:id", controllers.TodoController{HttpType: "api"}.Update)
-			apiTodo.DELETE("/:id", controllers.TodoController{HttpType: "api"}.Delete)
+			TodoController := controllers.TodoController{HttpType: "api"}
+
+			apiTodo.GET("", TodoController.Index)
+			apiTodo.POST("", TodoController.Store)
+			apiTodo.GET("/:id", TodoController.Show)
+			apiTodo.PUT("/:id", TodoController.Update)
+			apiTodo.DELETE("/:id", TodoController.Delete)
 		}
 	}
 
@@ -58,11 +60,13 @@ func Routes(r *echo.Echo) {
 	{
 		wt := rWeb.Group("/todo")
 		{
-			wt.GET("", controllers.TodoController{HttpType: "web"}.Index)
-			wt.POST("/store", controllers.TodoController{HttpType: "web"}.Store)
-			wt.GET("/:id", controllers.TodoController{HttpType: "web"}.Show)
-			wt.POST("/:id", controllers.TodoController{HttpType: "web"}.Update)
-			wt.GET("/:id/delete", controllers.TodoController{HttpType: "web"}.Delete)
+			TodoController := controllers.TodoController{HttpType: "web"}
+
+			wt.GET("", TodoController.Index)
+			wt.POST("/store", TodoController.Store)
+			wt.GET("/:id", TodoController.Show)
+			wt.POST("/:id", TodoController.Update)
+			wt.GET("/:id/delete", TodoController.Delete)
 		}
 	}
 

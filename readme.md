@@ -31,3 +31,4 @@ Check info about commands:
 ## Dev info:
 ### Create new model:
 - ent init {{name}}
+
