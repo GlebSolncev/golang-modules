@@ -18,24 +18,17 @@ replace: .env.example to .env
 - go-sqlite3
 -
 
-If setup FileMethod:
-- Create new file in storage dir: todo.json and save data about pages.
 
-If setup StructMethod:
-- Save data in memory 
-
-
-UP project:
-```shell
-     make up
-```
-
-Check info about commands:
+### Show list commands:
 ```shell
     make help
 ```
 
 ## Dev info:
-### Create new model:
-- ent init {{name}}
+- Add model(table) -> ent init {{name}}
+- Add enum const -> enumer --type={name} -json [..path]
+- url://assets/... -> have files with link on site
+- live update assets - true for static -> TEMPLATE_LIVE=false
+- go func -> on storage 
+- Create new app(ms) to parse url. Work with go func, select, channels. He create new file in dir storage and show info about links. 
 
