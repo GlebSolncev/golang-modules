@@ -14,9 +14,9 @@ replace: .env.example to .env
 ## Lib list:
 - [Labstack echo](https://echo.labstack.com/)
 - [ent.](https://entgo.io/)
+- [Swagger](https://github.com/swaggo/swag) 
 - godotenv
 - go-sqlite3
--
 
 
 ### Show list commands:
