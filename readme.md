@@ -4,6 +4,13 @@ Simple golang-modules
 http endpoint: localhost:8080
 replace: .env.example to .env
 
+## Start Application
+1. Update .env.example to .env
+2. Enter command
+```bash
+    make up
+```
+
 ## Lib list:
 - [Labstack echo](https://echo.labstack.com/)
 - [ent.](https://entgo.io/)
