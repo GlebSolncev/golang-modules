@@ -22,7 +22,7 @@ help:
 	@echo "\t get [package=[github....]]\t- install external package"
 	@echo "\t test\t\t\t\t- Testing application"
 	@echo "\t run\t\t\t\t- Run application"
-	@echo "\t swagger-init\t\t\t- Init swagger"
+	@echo "\t swagger-setup\t\t\t- Init swagger"
 	@echo "------------------------------------------------------------------------"
 
 # (dev command) to create model
@@ -30,15 +30,18 @@ create-model:
 	ent init  --target pkg/ent/schema $(model)
 
 
-swagger-init, si:
+swagger-setup, si:
 	@swag init -g ./cmd/todo/main.go --output internal/app/swagger
 	@echo "OK"
 
-up: generate, run
+up: generate, swagger-setup, enumer-setup, run
+
+enumer-setup, es:
+	enumer  --type=TodoStatus -json internal/app/models/todo.go
 
 generate, gen:
+	go generate ./pkg/ent/generate.go
 	go generate ./internal/models/todo/todo.go
-	go generate ./pkg/env/generate.go
 
 run:
 	@go run $(MAIN_PATH)
@@ -57,7 +60,3 @@ test:
 
 setup:
 	@eval $(STATUS)
-
-#vend:
-#	go mod vendor
-#	@echo "OK"

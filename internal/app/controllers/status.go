@@ -14,7 +14,7 @@ type (
 )
 
 var (
-	status = models.Status{}
+	status = models.StatusModel{}
 )
 
 // Index godoc

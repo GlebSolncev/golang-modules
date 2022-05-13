@@ -1,12 +1,12 @@
 package models
 
 type (
-	Status struct {
+	StatusModel struct {
 		Model
 	}
 )
 
-func (Status) GetAll() (interface{}, error) {
+func (StatusModel) GetAll() (interface{}, error) {
 	all := TodoStatusStrings()
 
 	return all, nil
