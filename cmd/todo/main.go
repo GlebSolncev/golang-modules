@@ -3,9 +3,10 @@ package main
 import (
 	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/swaggo/echo-swagger" // echo-swagger middleware
+	_ "golang-modules/docs"
 	"golang-modules/internal/app"
 	"golang-modules/internal/app/models"
-	_ "golang-modules/internal/app/swagger"
 )
 
 // @title Tоdo CRUD

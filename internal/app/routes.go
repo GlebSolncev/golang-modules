@@ -13,8 +13,8 @@ import (
 func Routes(r *echo.Echo) {
 
 	/** SWAGGER **/
-
 	r.GET("swag/*", echoSwagger.WrapHandler)
+	// You can import swagger.json in Postman.
 
 	/** FS **/
 

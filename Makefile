@@ -25,13 +25,16 @@ help:
 	@echo "\t swagger-setup\t\t\t- Init swagger"
 	@echo "------------------------------------------------------------------------"
 
+godoc:
+	godoc --http :6060
+
 # (dev command) to create model
 create-model:
 	ent init  --target pkg/ent/schema $(model)
 
 
 swagger-setup, si:
-	@swag init -g ./cmd/todo/main.go --output internal/app/swagger
+	@swag init -g ./cmd/todo/main.go --output docs/
 	@echo "OK"
 
 up: generate, swagger-setup, enumer-setup, run

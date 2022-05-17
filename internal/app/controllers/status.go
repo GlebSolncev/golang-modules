@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"github.com/labstack/echo/v4"
+	_ "github.com/swaggo/echo-swagger" // echo-swagger middleware
+	_ "golang-modules/docs"            // swagger
 	"golang-modules/internal/app/models"
 	"golang-modules/pkg/helpers"
 	"net/http"

@@ -13,6 +13,6 @@
 /out/
 /builds
 /vendor
-/internal/app/swagger/*
+/docs/*
 internal/app/models/todostatus_enumer.go
 !/storage/parser

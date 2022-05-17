@@ -3,8 +3,8 @@ package controllers
 import (
 	"github.com/labstack/echo/v4"
 	_ "github.com/swaggo/echo-swagger" // echo-swagger middleware
+	_ "golang-modules/docs"            // swagger
 	"golang-modules/internal/app/models"
-	_ "golang-modules/internal/app/swagger" // swagger
 	"golang-modules/pkg/ent"
 	"golang-modules/pkg/helpers"
 	"net/http"
@@ -12,8 +12,6 @@ import (
 	"sync"
 	_ "unsafe"
 )
-
-// Todo add bulk insert todo items
 
 type (
 	TodoController struct {

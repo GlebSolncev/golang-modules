@@ -4,7 +4,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
-	_ "golang-modules/internal/app/swagger" // swagger
+	_ "golang-modules/docs" // swagger
 	"net/http"
 	"os"
 	"time"
