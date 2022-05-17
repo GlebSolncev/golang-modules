@@ -5,6 +5,10 @@ import (
 	"runtime"
 )
 
+type HelloWorld struct {
+	Id int
+}
+
 var (
 	_, b, _, _ = runtime.Caller(0)
 	basePath   = filepath.Dir(b)

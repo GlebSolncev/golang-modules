@@ -8,6 +8,9 @@ type Struct struct {
 }
 
 type Field struct {
-	Name string
-	Type types.Type
+	Name    string
+	Type    types.Type
+	TypeS   string
+	Private bool
+	Imports string
 }
