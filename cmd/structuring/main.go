@@ -3,11 +3,18 @@ package main
 //Structuring
 
 import (
-	"golang-modules/internal/structirung"
-	"golang.org/x/tools/go/packages"
+	"golang-modules/internal/structuring"
 	"path/filepath"
 )
 
+/**
+Example:
+	`go:generate main.go -name Human -all`
+FLAGS:
+
+-name [Name] 	- Name struct for find and work with it
+-all 			- Get all fields and create getters/setters for it. Without this arg, I'm working with private fields.
+*/
 func getPath() string {
 	dir, err := filepath.Abs(".")
 	if err != nil {
@@ -17,24 +24,6 @@ func getPath() string {
 	return dir
 }
 
-func getPackageName() *packages.Package {
-	pkgs, err := packages.Load(&packages.Config{
-		Mode: packages.NeedName | packages.NeedFiles |
-			packages.NeedImports | packages.NeedTypes | packages.NeedSyntax,
-		Tests: false,
-	}, getPath())
-
-	if err != nil {
-		panic(err)
-	}
-
-	if len(pkgs) != 1 {
-		panic(err)
-	}
-
-	return pkgs[0]
-}
-
 func main() {
-	structirung.Execute(getPath(), getPackageName())
+	structuring.Execute(getPath())
 }
