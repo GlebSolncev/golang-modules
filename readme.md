@@ -24,12 +24,3 @@ replace: .env.example to .env
 ```shell
     make help
 ```
-
-## Dev info:
-- Add model(table) -> ent init {{name}}
-- Add enum const -> enumer --type={name} -json [..path]
-- url://assets/... -> have files with link on site
-- live update assets - true for static -> TEMPLATE_LIVE=false
-- go func -> on storage 
-- Create new app(ms) to parse url. Work with go func, select, channels. He create new file in dir storage and show info about links. 
-
