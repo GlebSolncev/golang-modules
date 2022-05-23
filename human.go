@@ -2,7 +2,7 @@ package golang_modules
 
 import "golang-modules/pkg/path"
 
-//go:generate go run ./cmd/structuring/main.go -name Human
+//go:generate go run ./cmd/structuring/main.go -name Human -all
 
 type (
 	Human struct {
