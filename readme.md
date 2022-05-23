@@ -1,4 +1,4 @@
-![alt text](https://media.proglib.io/posts/2020/12/26/d7a75de26618037f249e6fdf3bd0f822.jpg)
+![alt text](https://d3hi6wehcrq5by.cloudfront.net/itnavi-blog/2020/11/Golang-l%C3%A0-g%C3%AC-2.jpg)
 Simple golang-modules
 
 http endpoint: localhost:8080
