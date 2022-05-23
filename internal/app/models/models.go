@@ -22,42 +22,23 @@ type Model interface {
 }
 
 var (
-	test           = false
 	dataSourceName string
-	ctx            context.Context
 	c              *ent.Client
 )
 
-func Init(test bool) {
-	//_ = godotenv.Load(".env")
-	getDataSourceName(test)
-	ctx = context.Background()
-	//setContext()
+func Init(datasource string) {
+	getDataSourceName(datasource)
 	createDB()
 }
 
-func setContext() {
-	ctx = context.Background()
-}
-
-func SetTypeWork(status bool) {
-	test = status
-}
-
-func getDataSourceName(test bool) {
-
-	if test {
-		_ = godotenv.Load(path.GetBasePath(".env.test"))
-	} else {
-		_ = godotenv.Load(path.GetBasePath(".env"))
-	}
+func getDataSourceName(datasource string) {
+	_ = godotenv.Load(path.GetBasePath(datasource))
 
 	if os.Getenv("DB_DRIVER") == "" {
 		panic("Env Not found")
 	}
 
 	host := os.Getenv("DB_HOST")
-
 	if os.Getenv("DB_DRIVER") == "file" {
 		host = path.GetBasePath(host)
 	}
@@ -78,16 +59,16 @@ func conn() {
 }
 
 func closeConn() {
-	defer c.Close()
+	err := c.Close()
+	helpers.Check(err)
 }
 
 func createDB() {
 	conn()
-	if err := c.Schema.Create(ctx); err != nil {
+	defer closeConn()
+	if err := c.Schema.Create(context.Background()); err != nil {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
-
-	closeConn()
 }
 
 func getTimeNow() time.Time {

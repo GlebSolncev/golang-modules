@@ -17,7 +17,7 @@ func (Todo) Fields() []ent.Field {
 		field.Int("id").
 			Positive(),
 		field.String("slug").NotEmpty(),
-		field.String("name").Optional().Nillable(),
+		field.String("name"),
 		field.Enum("status").
 			Values("Todo", "InProgress", "Done", "Review").
 			Default("Todo"),

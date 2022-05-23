@@ -36,7 +36,6 @@ var (
 // @Failure 404
 // @Router /api/todo [get]
 func (tc TodoController) Index(c echo.Context) error {
-	models.SetTypeWork(tc.Test)
 	res, err := todo.GetAll()
 	helpers.Check(err)
 
@@ -65,7 +64,6 @@ func (tc TodoController) Show(c echo.Context) error {
 		res interface{}
 	)
 
-	models.SetTypeWork(tc.Test)
 	id, err = strconv.Atoi(c.Param("id"))
 	helpers.Check(err)
 	res, err = todo.FindById(id)
@@ -136,7 +134,6 @@ func (tc TodoController) Update(c echo.Context) error {
 		err  error
 	)
 
-	models.SetTypeWork(tc.Test)
 	if err = c.Bind(item); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
@@ -166,7 +163,6 @@ func (tc TodoController) Delete(c echo.Context) error {
 		id, _ = strconv.Atoi(c.Param("id"))
 	)
 
-	models.SetTypeWork(tc.Test)
 	todo.DelModel(id)
 
 	if tc.HttpType == "api" {

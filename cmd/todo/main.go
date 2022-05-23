@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/joho/godotenv"
 	_ "github.com/mattn/go-sqlite3"
 	_ "github.com/swaggo/echo-swagger" // echo-swagger middleware
 	_ "golang-modules/docs"
@@ -20,8 +19,6 @@ import (
 // @host localhost:8080
 // @BasePath /
 func main() {
-	_ = godotenv.Load(".env")
-
-	models.Init(false)
+	models.Init(".env")
 	app.Start()
 }

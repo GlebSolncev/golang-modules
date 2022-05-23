@@ -22,13 +22,13 @@ const (
 	Review
 )
 
-func (TodoModel) GetAll() (interface{}, error) {
+func (TodoModel) GetAll() ([]*ent.Todo, error) {
 	conn()
+	defer closeConn()
 	data, err := c.Todo.
 		Query().
 		Select(todo.FieldID, todo.FieldSlug, todo.FieldName, todo.FieldCreatedAt, todo.FieldStatus).
 		All(context.Background())
-	closeConn()
 
 	return data, err
 }
@@ -36,13 +36,14 @@ func (TodoModel) GetAll() (interface{}, error) {
 func (TodoModel) UpdateModel(model interface{}) interface{} {
 	m := model.(*ent.Todo)
 	conn()
+	defer closeConn()
 	model, err := c.Todo.
 		UpdateOneID(m.ID).
-		SetName(*m.Name).
+		SetName(m.Name).
 		SetSlug(m.Slug).
 		SetStatus(m.Status).
-		Save(ctx)
-	closeConn()
+		Save(context.Background())
+
 	helpers.Check(err)
 
 	return model
@@ -53,10 +54,10 @@ func (TodoModel) DelModel(id int) bool {
 		err error
 	)
 	conn()
+	defer closeConn()
 	err = c.Todo.
 		DeleteOneID(id).
-		Exec(ctx)
-	closeConn()
+		Exec(context.Background())
 	helpers.Check(err)
 
 	return true
@@ -64,24 +65,32 @@ func (TodoModel) DelModel(id int) bool {
 
 func (tm TodoModel) FindById(id int) (interface{}, error) {
 	conn()
-	m, err := c.Todo.Query().Where(todo.ID(id)).First(ctx)
-	closeConn()
+	defer closeConn()
+	m, err := c.Todo.Query().Where(todo.ID(id)).First(context.Background())
 
 	return m, err
 }
 
 func (TodoModel) Store(model *ent.Todo) (int, error) {
 	conn()
+	defer c.Close()
 	m := c.Todo.Create()
 
-	res, err := m.SetSlug(model.Slug).
-		SetName(*model.Name).
+	fillable := m.SetSlug(model.Slug).
+		SetName(model.Name).
 		SetStatus(model.Status).
 		SetCreatedAt(getTimeNow()).
-		SetUpdatedAt(getTimeNow()).
-		Save(ctx)
+		SetUpdatedAt(getTimeNow())
 
-	closeConn()
+	if model.ID > 0 {
+		fillable = fillable.SetID(model.ID)
+	}
+
+	res, err := fillable.Save(context.Background())
+
+	if err != nil {
+		return 0, err
+	}
 
 	return res.ID, err
 }

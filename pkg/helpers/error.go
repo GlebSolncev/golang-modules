@@ -1,7 +1,9 @@
 package helpers
 
+import "github.com/labstack/gommon/log"
+
 func Check(err error) {
 	if err != nil {
-		panic(err)
+		log.Error(err)
 	}
 }

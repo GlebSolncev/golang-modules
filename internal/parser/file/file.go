@@ -46,8 +46,6 @@ func CanAddToCollect(url string) bool {
 		if item.Url == url {
 			status = false
 			break
-			//} else {
-			//	fmt.Println("[404] " + url + item.Url)
 		}
 	}
 

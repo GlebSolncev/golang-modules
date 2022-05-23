@@ -3,14 +3,11 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"golang-modules/internal/app/models"
-	"golang-modules/pkg/path"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"strings"
 	"testing"
 )
@@ -19,25 +16,8 @@ var (
 	JSONbody = `{"name":"Work with Golang","slug":"work-with-golang","status":"InProgress"}`
 )
 
-func getTestDBSource() string {
-	err := godotenv.Load("../../../.env.test")
-	fmt.Println("!!!!!!!!!!!    err", err)
-	host := os.Getenv("DB_HOST")
-
-	if os.Getenv("DB_DRIVER") == "file" {
-		host = path.GetBasePath(host)
-	}
-
-	return fmt.Sprintf("%s:%s%s%s?%s",
-		os.Getenv("DB_DRIVER"),
-		host,
-		os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_ADDITION"))
-}
-
 func TestTodoController_Store(t *testing.T) {
-	models.Init(true)
+	models.Init(".env.test")
 
 	e := echo.New()
 	req := httptest.NewRequest(http.MethodPost, "/api/todo", strings.NewReader(JSONbody))
@@ -48,12 +28,11 @@ func TestTodoController_Store(t *testing.T) {
 
 	if assert.NoError(t, controllers.Store(c)) {
 		assert.Equal(t, http.StatusCreated, rec.Code)
-
 	}
 }
 
 func TestTodoController_Index(t *testing.T) {
-	models.Init(true)
+	models.Init(".env.test")
 
 	e := echo.New()
 	controllers := TodoController{HttpType: "api"}
@@ -84,5 +63,4 @@ func TestTodoController_Index(t *testing.T) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 
 	}
-
 }
